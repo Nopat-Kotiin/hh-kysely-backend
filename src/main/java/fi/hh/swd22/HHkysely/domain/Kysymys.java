@@ -1,9 +1,18 @@
 package fi.hh.swd22.HHkysely.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 public class Kysymys {
 
-	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long kysymysId;
+	
 	private String kysymys;
 	private String vastaus;
 	
