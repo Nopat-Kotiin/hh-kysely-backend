@@ -1,8 +1,5 @@
 package fi.hh.swd22.HHkysely.domain;
 
-
-
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,26 +8,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 
-@EntityScan
+@Entity
 public class Kysely {
-
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long kyselyId;
 	
 	private String nimi;
-	
-	
-	
-	
+		
 	public Kysely() {}
 	
-	
-	public Kysely(long kyselyId, String nimi) {
+	public Kysely(String nimi) {
 		
 		super();
-		this.kyselyId = kyselyId;
 		this.nimi = nimi;
 	}
 
