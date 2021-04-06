@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity
@@ -17,30 +18,29 @@ public class Kysely {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private long kyselyId;
+	private long id;
 	
 	private String nimi;
 
-	@JsonIgnore
+	@JsonManagedReference
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "kysely")
 	private List<Kysymys> kysymykset;
 		
 	public Kysely() {}
 	
 	public Kysely(String nimi) {
-		
 		super();
 		this.nimi = nimi;
 	}
 
 
-	public long getKyselyId() {
-		return kyselyId;
+	public long getId() {
+		return id;
 	}
 
 
-	public void setKyselyId(long kyselyId) {
-		this.kyselyId = kyselyId;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 
@@ -53,10 +53,18 @@ public class Kysely {
 		this.nimi = nimi;
 	}
 
+	public List<Kysymys> getKysymykset() {
+		return kysymykset;
+	}
+
+	public void setKysymykset(List<Kysymys> kysymykset) {
+		this.kysymykset = kysymykset;
+	}
+
 
 	@Override
 	public String toString() {
-		return "Kysely [kyselyId=" + kyselyId + ", nimi=" + nimi + "]";
+		return "Kysely [kyselyId=" + id + ", nimi=" + nimi + "]";
 	}
 	
 }
