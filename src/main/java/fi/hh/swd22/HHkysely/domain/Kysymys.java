@@ -16,6 +16,10 @@ public class Kysymys {
 	
 	private String kysymys;
 	private String vastaus;
+
+	@ManyToOne
+	@JoinColumn(name = "kyselyId")
+	private Kysely kysely;
 	
 	
 	public Kysymys() {}
