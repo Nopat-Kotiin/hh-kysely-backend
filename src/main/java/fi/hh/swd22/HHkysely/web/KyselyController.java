@@ -1,5 +1,6 @@
 package fi.hh.swd22.HHkysely.web;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import fi.hh.swd22.HHkysely.domain.Kysely;
 import fi.hh.swd22.HHkysely.domain.KyselyRepository;
+import fi.hh.swd22.HHkysely.domain.Kysymys;
 import fi.hh.swd22.HHkysely.domain.KysymysRepository;
 
 
@@ -51,14 +53,27 @@ public class KyselyController {
     }
     
     @RequestMapping(value="/save", method = RequestMethod.POST)
-    public String tallennaKysely(@ModelAttribute Kysely kysely) {
-    	
+    public String tallennaKysely(@ModelAttribute Kysely kysely) {    	
     	kyselyRepository.save(kysely);
+
+        for (Kysymys k : kysely.getKysymykset()) {
+            k.setKysely(kysely);
+            kysymysRepository.save(k);
+        }
     	
     	return "redirect:/surveys";
     }
     
-  
+    @GetMapping("addsurvey")
+    public String addSurvey(Model model) {
+        List<Kysymys> kysymykset = new ArrayList<>();
+        Kysely kysely = new Kysely("");
+        Kysymys k1 = new Kysymys("Kysymys 1", kysely);
+        kysymykset.add(k1);
+        model.addAttribute("kysely", kysely);
+        model.addAttribute("kysymykset", kysymykset);
+        return "addsurvey";
+    }
 
     
 }
