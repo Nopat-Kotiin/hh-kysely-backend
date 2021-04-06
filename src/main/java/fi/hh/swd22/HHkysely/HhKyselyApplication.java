@@ -29,6 +29,8 @@ public class HhKyselyApplication {
 
 			Kysymys kysymys1 = new Kysymys("Kysymys 1", kysely1);
 			kysymysRepository.save(kysymys1);
+			Kysymys kysymys2 = new Kysymys("Kysymys 2", kysely1);
+			kysymysRepository.save(kysymys2);
 		};
 	}
 

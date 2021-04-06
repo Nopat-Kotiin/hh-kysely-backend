@@ -7,16 +7,19 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Kysymys {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private long kysymysId;
+	private long id;
 	
 	private String kysymys;
 	private String vastaus;
 
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "kyselyId")
 	private Kysely kysely;
@@ -26,7 +29,6 @@ public class Kysymys {
 	
 	
 	public Kysymys(String kysymys, Kysely kysely) {
-		
 		super();
 		this.kysymys = kysymys;
 		this.vastaus = "";
@@ -34,13 +36,13 @@ public class Kysymys {
 	}
 
 
-	public long getKysymysId() {
-		return kysymysId;
+	public long getId() {
+		return id;
 	}
 
 
-	public void setKysymysId(long kysymysId) {
-		this.kysymysId = kysymysId;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 
@@ -63,10 +65,18 @@ public class Kysymys {
 		this.vastaus = vastaus;
 	}
 
+	public void setKysely(Kysely kysely) {
+		this.kysely = kysely;
+	}
+
+	public Kysely getKysely() {
+		return kysely;
+	}
+
 
 	@Override
 	public String toString() {
-		return "Kysymys [kysymysId=" + kysymysId + ", kysymys=" + kysymys + ", vastaus=" + vastaus + "]";
+		return "Kysymys [kysymysId=" + id + ", kysymys=" + kysymys + ", vastaus=" + vastaus + "]";
 	}
 	
 }
