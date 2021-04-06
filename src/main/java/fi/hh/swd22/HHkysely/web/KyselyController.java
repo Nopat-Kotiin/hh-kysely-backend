@@ -46,7 +46,7 @@ public class KyselyController {
     	
     	kyselyRepository.save(kysely);
     	
-    	return "redirect:kyselyt";
+    	return "redirect:surveys";
     }
     
 }
