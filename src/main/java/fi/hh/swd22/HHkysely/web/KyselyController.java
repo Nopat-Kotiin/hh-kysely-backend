@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import fi.hh.swd22.HHkysely.domain.Kysely;
 import fi.hh.swd22.HHkysely.domain.KyselyRepository;
 import fi.hh.swd22.HHkysely.domain.KysymysRepository;
+
 
 @Controller
 @CrossOrigin("*")
@@ -41,12 +43,22 @@ public class KyselyController {
     	
     }
     
+    @RequestMapping(value = "/surveys", method = RequestMethod.GET)
+	public String getKyselyt (Model model) {
+		List<Kysely> kyselyt = (List<Kysely>) kyselyRepository.findAll();
+		model.addAttribute("kyselyt", kyselyt);
+		return "surveys";
+    }
+    
     @RequestMapping(value="/save", method = RequestMethod.POST)
-    public String tallennaKysely(Kysely kysely) {
+    public String tallennaKysely(@ModelAttribute Kysely kysely) {
     	
     	kyselyRepository.save(kysely);
     	
-    	return "redirect:surveys";
+    	return "redirect:/surveys";
     }
+    
+  
+
     
 }
