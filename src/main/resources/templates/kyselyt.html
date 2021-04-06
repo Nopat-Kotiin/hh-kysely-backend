@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Kyselyt</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Kyselyt</h1>
+	<table class="table table-striped">
+		<tr>
+			
+			
+			<th>Nimi</th>
+			
+		</tr>
+
+		<tr th:each="kysely : ${kyselyt}">
+			<td th:text="${kysely.nimi}">Nimi</td>
+			
+			
+		</tr>
+	</table>
+	<a href="/lisaakysely"><button class="btn btn-success">Lisää kysely </button></a>
+	
+
+</body>
+</html>

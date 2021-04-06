@@ -34,7 +34,7 @@ public class KyselyController {
     	
     	
     	model.addAttribute("kysely", new Kysely());
-    	model.addAttribute("kyselyt", kysymysRepository.findAll());
+    	model.addAttribute("kyselyt", kyselyRepository.findAll());
     	
     	return "lisaakysely";
     	
