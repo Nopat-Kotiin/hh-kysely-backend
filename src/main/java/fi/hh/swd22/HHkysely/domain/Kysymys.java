@@ -25,13 +25,12 @@ public class Kysymys {
 	public Kysymys() {}
 	
 	
-	public Kysymys(long kysymysId, String kysymys, String vastaus) {
+	public Kysymys(String kysymys, Kysely kysely) {
 		
 		super();
-		this.kysymysId = kysymysId;
 		this.kysymys = kysymys;
-		this.vastaus = vastaus;
-		
+		this.vastaus = "";
+		this.kysely = kysely;
 	}
 
 

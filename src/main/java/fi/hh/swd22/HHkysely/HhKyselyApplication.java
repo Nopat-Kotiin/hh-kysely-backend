@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 
 import fi.hh.swd22.HHkysely.domain.Kysely;
 import fi.hh.swd22.HHkysely.domain.KyselyRepository;
+import fi.hh.swd22.HHkysely.domain.Kysymys;
+import fi.hh.swd22.HHkysely.domain.KysymysRepository;
 
 @SpringBootApplication
 public class HhKyselyApplication {
@@ -16,13 +18,17 @@ public class HhKyselyApplication {
 	}
 
 	@Bean
-	public CommandLineRunner demo(KyselyRepository kyselyRepository) {
+	public CommandLineRunner demo(KyselyRepository kyselyRepository, KysymysRepository kysymysRepository) {
 		return (args) -> {
-			kyselyRepository.save(new Kysely("Testi 1"));
+			Kysely kysely1 = new Kysely("Testi 1");
+			kyselyRepository.save(kysely1);
 			kyselyRepository.save(new Kysely("Testi 2"));
 			kyselyRepository.save(new Kysely("Testi 3"));
 			kyselyRepository.save(new Kysely("Testi 4"));
 			kyselyRepository.save(new Kysely("Testi 5"));
+
+			Kysymys kysymys1 = new Kysymys("Kysymys 1", kysely1);
+			kysymysRepository.save(kysymys1);
 		};
 	}
 
