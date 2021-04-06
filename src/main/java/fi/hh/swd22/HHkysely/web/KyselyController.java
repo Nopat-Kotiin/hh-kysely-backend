@@ -2,13 +2,17 @@ package fi.hh.swd22.HHkysely.web;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -75,5 +79,26 @@ public class KyselyController {
         return "addsurvey";
     }
 
+    @GetMapping("edit/{id}")
+    public String editSurvey(@PathVariable("id") Long id, Model model) {
+        Kysely kysely = kyselyRepository.findById(id).get();
+        List<Kysymys> kysymykset = kysely.getKysymykset();
+        model.addAttribute("kysely", kysely);
+        model.addAttribute("kysymykset", kysymykset);
+        return "addsurvey";
+    }
+
+    // Palauttaa No Content statuksen, jos kyselyä ei löydy
+    @GetMapping("survey/{id}")
+    public @ResponseBody ResponseEntity<Kysely> getSurveyById(@PathVariable("id") Long id) {
+        HttpStatus status = HttpStatus.NO_CONTENT;
+        Optional<Kysely> k = kyselyRepository.findById(id);
+        Kysely kysely = new Kysely();
+        if (k.isPresent()) {
+            kysely = k.get();
+            status = HttpStatus.OK;
+        }
+        return new ResponseEntity<>(kysely, status);
+    }
     
 }
