@@ -1,2 +1,0 @@
-document.getElementById("parentID").innerHTML+= "new content"
-

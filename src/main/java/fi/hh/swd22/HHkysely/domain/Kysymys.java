@@ -19,7 +19,7 @@ public class Kysymys {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private long id;
+	private long kysymysId;
 	
 	private String kysymys;
 	private String vastaus;
@@ -56,12 +56,12 @@ public class Kysymys {
 
 
 	public long getId() {
-		return id;
+		return kysymysId;
 	}
 
 
-	public void setId(long id) {
-		this.id = id;
+	public void setId(long kysymysId) {
+		this.kysymysId = kysymysId;
 	}
 
 
@@ -95,7 +95,7 @@ public class Kysymys {
 
 	@Override
 	public String toString() {
-		return "Kysymys [id=" + id + ", kysymys=" + kysymys + ", vastaus=" + vastaus + ", kysely=" + kysely
+		return "Kysymys [kysymysId=" + kysymysId + ", kysymys=" + kysymys + ", vastaus=" + vastaus + ", kysely=" + kysely
 				+ ", Vastaukset=" + Vastaukset + "]";
 	}
 

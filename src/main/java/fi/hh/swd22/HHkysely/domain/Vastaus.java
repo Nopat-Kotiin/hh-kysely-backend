@@ -22,8 +22,9 @@ public class Vastaus {
 	
 	private String vastaus;
 	
-	@JsonManagedReference
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "kysymys")
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "kysymysId")
 	private Kysymys kysymys;
 
 	public Vastaus(String vastaus, Kysymys kysymys) {
