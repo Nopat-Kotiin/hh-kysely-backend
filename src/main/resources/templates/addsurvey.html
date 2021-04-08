@@ -5,16 +5,37 @@
     <title>Lisää kysely</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <script th:inline="javascript">
-        function addField(){
+        function addField() {
             let rowIndex = document.getElementById('kysymykset').getElementsByTagName('tr').length;
             let input = document.createElement('input');
             input.id = "kysymykset" + rowIndex + ".kysymys";
             input.setAttribute("name", "kysymykset[" + rowIndex + "].kysymys");
             input.setAttribute("type", "text");
+
+            let remove = document.createElement('button');
+            remove.innerHTML = "-";
+            remove.id = rowIndex;
+            remove.setAttribute("onClick", "removeField(" + rowIndex + ")");
+            remove.setAttribute("type", "button");
+
             let tr = document.getElementById("kysymykset").insertRow(-1);
-            let td = document.createElement('td');
-            td.appendChild(input);
-            tr.appendChild(td);
+            let tdField = document.createElement('td');
+            let tdRemove = document.createElement('td');
+            tdField.appendChild(input);
+            tr.appendChild(tdField);
+            tdRemove.appendChild(remove);
+            tr.appendChild(tdRemove);
+        }
+
+        function removeField(id) {
+            let table = document.getElementById('kysymykset');
+            for (var i = 0, row; row = table.rows[i]; i++) {
+                let current = parseInt(row.cells[1].getElementsByTagName('button')[0].id);
+                if (current === id) {
+                    table.deleteRow(i);
+                    break;
+                }
+            }
         }
     </script>
 </head>
@@ -31,6 +52,8 @@
         <table id="kysymykset">
             <tr th:each="kysymys, stat : ${kysymykset}">
                 <td><input type="text" th:field="*{kysymykset[__${stat.index}__].kysymys}" /></td>
+                <td><button type="button" th:id="${stat.index}"
+                        th:attr="onclick=|removeField(${stat.index})|">-</button></td>
             </tr>
         </table>
         <button type="button" onClick="addField()">lisää</button>
