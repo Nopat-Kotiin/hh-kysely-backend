@@ -8,16 +8,12 @@
 <h1>Kyselyt</h1>
 	<table>
 		<tr>
-			
-			
 			<th>Nimi</th>
-			
 		</tr>
 
 		<tr th:each="kysely : ${kyselyt}">
 			<td th:text="${kysely.nimi}">Nimi</td>
-			
-			
+			<td><a th:href="@{/edit/{id}(id=${kysely.id})}"><button>edit</button></a></td>
 		</tr>
 	</table>
 	<a href="/addsurvey"><button class="btn btn-success">Lisää kysely </button></a>

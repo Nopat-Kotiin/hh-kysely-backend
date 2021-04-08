@@ -1,5 +1,6 @@
 package fi.hh.swd22.HHkysely.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -30,6 +31,7 @@ public class Kysely {
 	public Kysely(String nimi) {
 		super();
 		this.nimi = nimi;
+		this.kysymykset = new ArrayList<>();
 	}
 
 
@@ -60,6 +62,18 @@ public class Kysely {
 		this.kysymykset = kysymykset;
 	}
 
+	public void addKysymys(Kysymys k) {
+		this.kysymykset.add(k);
+	}
+
+	public void dismissKysymys(Kysymys k) {
+		this.kysymykset.remove(k);
+	}
+
+	public void dismissKysymyses() {
+	   this.kysymykset.forEach(k -> k.dismissKysely()); // SYNCHRONIZING THE OTHER SIDE OF RELATIONSHIP 
+	   this.kysymykset.clear();
+	}
 
 	@Override
 	public String toString() {
