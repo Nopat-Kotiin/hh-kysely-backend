@@ -30,7 +30,7 @@
         function removeField(id) {
             let table = document.getElementById('kysymykset');
             for (var i = 0, row; row = table.rows[i]; i++) {
-                let current = parseInt(row.cells[1].getElementsByTagName('button')[0].id);
+                let current = parseInt(row.getElementsByTagName('button')[0].id);
                 if (current === id) {
                     table.deleteRow(i);
                     break;
