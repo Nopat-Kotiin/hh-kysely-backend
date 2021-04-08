@@ -37,17 +37,6 @@ public class KyselyController {
     public @ResponseBody List<Kysely> getKyselyt() {
         return (List<Kysely>) kyselyRepository.findAll();
     }
-
-    @RequestMapping(value="/lisaakysely")
-    public String lisaaKysely(Model model) {
-    	
-    	
-    	model.addAttribute("kysely", new Kysely());
-    	model.addAttribute("kyselyt", kyselyRepository.findAll());
-    	
-    	return "lisaakysely";
-    	
-    }
     
     @RequestMapping(value = "/surveys", method = RequestMethod.GET)
 	public String getKyselyt (Model model) {
@@ -57,14 +46,24 @@ public class KyselyController {
     }
     
     @RequestMapping(value="/save", method = RequestMethod.POST)
-    public String tallennaKysely(@ModelAttribute Kysely kysely) {    	
-    	kyselyRepository.save(kysely);
+    public String tallennaKysely(@ModelAttribute Kysely kysely) {
+        if (kysely.getId() == 0l) {
+            kyselyRepository.save(kysely);
+        }
 
         for (Kysymys k : kysely.getKysymykset()) {
-            k.setKysely(kysely);
-            kysymysRepository.save(k);
+            if (k.getKysymys() != null) {
+                k.setKysely(kysely);
+                kysymysRepository.save(k);
+            }
         }
-    	
+
+        for (Kysymys k : kysymysRepository.findByKyselyId(kysely.getId())) {
+            if (!kysely.getKysymykset().contains(k)) {
+                k.getKysely().dismissKysymys(k);
+                kysymysRepository.delete(k);
+            }
+        }
     	return "redirect:/surveys";
     }
     
