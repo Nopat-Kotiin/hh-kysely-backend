@@ -47,9 +47,7 @@ public class SurveyController {
     
     @RequestMapping(value="/save", method = RequestMethod.POST)
     public String saveSurvey(@ModelAttribute Survey survey) {
-        if (survey.getId() == 0l) {
-            surveyRepository.save(survey);
-        }
+        surveyRepository.save(survey);
 
         for (Question q : survey.getQuestions()) {
             System.out.println(q);
