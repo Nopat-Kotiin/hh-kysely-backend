@@ -25,7 +25,7 @@ import fi.hh.swd22.HHkysely.domain.QuestionRepository;
 
 @Controller
 @CrossOrigin("*")
-public class KyselyController {
+public class SurveyController {
 
     @Autowired
     private SurveyRepository surveyRepository;
