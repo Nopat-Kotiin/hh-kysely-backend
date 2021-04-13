@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 
 import fi.hh.swd22.HHkysely.domain.Survey;
 import fi.hh.swd22.HHkysely.domain.SurveyRepository;
+import fi.hh.swd22.HHkysely.domain.Answer;
+import fi.hh.swd22.HHkysely.domain.AnswerRepository;
 import fi.hh.swd22.HHkysely.domain.Question;
 import fi.hh.swd22.HHkysely.domain.QuestionRepository;
 
@@ -18,19 +20,25 @@ public class HhKyselyApplication {
 	}
 
 	@Bean
-	public CommandLineRunner demo(SurveyRepository kyselyRepository, QuestionRepository kysymysRepository) {
+	public CommandLineRunner demo(SurveyRepository surveyRepository,
+								QuestionRepository questionRepository,
+								AnswerRepository answerRepository) {
 		return (args) -> {
 			Survey kysely1 = new Survey("Testi 1");
-			kyselyRepository.save(kysely1);
-			kyselyRepository.save(new Survey("Testi 2"));
-			kyselyRepository.save(new Survey("Testi 3"));
-			kyselyRepository.save(new Survey("Testi 4"));
-			kyselyRepository.save(new Survey("Testi 5"));
+			surveyRepository.save(kysely1);
+			surveyRepository.save(new Survey("Testi 2"));
+			surveyRepository.save(new Survey("Testi 3"));
+			surveyRepository.save(new Survey("Testi 4"));
+			surveyRepository.save(new Survey("Testi 5"));
 
 			Question kysymys1 = new Question("Kysymys 1", kysely1);
-			kysymysRepository.save(kysymys1);
+			questionRepository.save(kysymys1);
 			Question kysymys2 = new Question("Kysymys 2", kysely1);
-			kysymysRepository.save(kysymys2);
+			questionRepository.save(kysymys2);
+
+			Answer answer = new Answer("Vastaus", kysymys1);
+			answerRepository.save(answer);
+			answerRepository.save(new Answer("Hei", kysymys2));
 		};
 	}
 

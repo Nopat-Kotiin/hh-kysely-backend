@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -31,7 +30,7 @@ public class Question {
 	private Survey survey;
 	
 	@JsonManagedReference
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "answer")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "question")
 	private List<Answer> answers;
 
 	public Question() {}
