@@ -11,23 +11,22 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 
-public class Vastaus {
+public class Answer {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
-	private String vastaus;
+	private String answer;
 	
 	@JsonBackReference
 	@ManyToOne
-	@JoinColumn(name = "kysymysId")
-	private Kysymys kysymys;
+	@JoinColumn(name = "questionId")
+	private Question question;
 
-	public Vastaus(String vastaus, Kysymys kysymys) {
-	
-		this.vastaus = vastaus;
-		this.kysymys = kysymys;
+	public Answer(String answer, Question question) {
+		this.answer = answer;
+		this.question = question;
 	}
 
 	public long getId() {
@@ -38,20 +37,20 @@ public class Vastaus {
 		this.id = id;
 	}
 
-	public String getVastaus() {
-		return vastaus;
+	public String getAnswer() {
+		return answer;
 	}
 
-	public void setVastaus(String vastaus) {
-		this.vastaus = vastaus;
+	public void setAnswer(String answer) {
+		this.answer = answer;
 	}
 
-	public Kysymys getKysymys() {
-		return kysymys;
+	public Question getQuestion() {
+		return question;
 	}
 
-	public void setKysymys(Kysymys kysymys) {
-		this.kysymys = kysymys;
+	public void setQuestion(Question question) {
+		this.question = question;
 	}	
 
 }

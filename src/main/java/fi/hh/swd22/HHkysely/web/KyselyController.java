@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import fi.hh.swd22.HHkysely.domain.Kysely;
-import fi.hh.swd22.HHkysely.domain.KyselyRepository;
-import fi.hh.swd22.HHkysely.domain.Kysymys;
-import fi.hh.swd22.HHkysely.domain.KysymysRepository;
+import fi.hh.swd22.HHkysely.domain.Survey;
+import fi.hh.swd22.HHkysely.domain.SurveyRepository;
+import fi.hh.swd22.HHkysely.domain.Question;
+import fi.hh.swd22.HHkysely.domain.QuestionRepository;
 
 
 @Controller
@@ -28,40 +28,41 @@ import fi.hh.swd22.HHkysely.domain.KysymysRepository;
 public class KyselyController {
 
     @Autowired
-    private KyselyRepository kyselyRepository;
+    private SurveyRepository surveyRepository;
 
     @Autowired
-    private KysymysRepository kysymysRepository;
+    private QuestionRepository questionRepository;
 
     @GetMapping("/kyselyt")
-    public @ResponseBody List<Kysely> getKyselyt() {
-        return (List<Kysely>) kyselyRepository.findAll();
+    public @ResponseBody List<Survey> getKyselyt() {
+        return (List<Survey>) surveyRepository.findAll();
     }
     
     @RequestMapping(value = "/surveys", method = RequestMethod.GET)
-	public String getKyselyt (Model model) {
-		List<Kysely> kyselyt = (List<Kysely>) kyselyRepository.findAll();
-		model.addAttribute("kyselyt", kyselyt);
+	public String getSurveys (Model model) {
+		List<Survey> surveys = (List<Survey>) surveyRepository.findAll();
+		model.addAttribute("surveys", surveys);
 		return "surveys";
     }
     
     @RequestMapping(value="/save", method = RequestMethod.POST)
-    public String tallennaKysely(@ModelAttribute Kysely kysely) {
-        if (kysely.getId() == 0l) {
-            kyselyRepository.save(kysely);
+    public String saveSurvey(@ModelAttribute Survey survey) {
+        if (survey.getId() == 0l) {
+            surveyRepository.save(survey);
         }
 
-        for (Kysymys k : kysely.getKysymykset()) {
-            if (k.getKysymys() != null) {
-                k.setKysely(kysely);
-                kysymysRepository.save(k);
+        for (Question q : survey.getQuestions()) {
+            System.out.println(q);
+            if (q.getQuestion() != null) {
+                q.setSurvey(survey);
+                questionRepository.save(q);
             }
         }
 
-        for (Kysymys k : kysymysRepository.findByKyselyId(kysely.getId())) {
-            if (!kysely.getKysymykset().contains(k)) {
-                k.getKysely().dismissKysymys(k);
-                kysymysRepository.delete(k);
+        for (Question q : questionRepository.findBySurveyId(survey.getId())) {
+            if (!survey.getQuestions().contains(q)) {
+                q.getSurvey().dismissQuestion(q);
+                questionRepository.delete(q);
             }
         }
     	return "redirect:/surveys";
@@ -69,35 +70,35 @@ public class KyselyController {
     
     @GetMapping("addsurvey")
     public String addSurvey(Model model) {
-        List<Kysymys> kysymykset = new ArrayList<>();
-        Kysely kysely = new Kysely("");
-        Kysymys k1 = new Kysymys("Kysymys 1", kysely);
-        kysymykset.add(k1);
-        model.addAttribute("kysely", kysely);
-        model.addAttribute("kysymykset", kysymykset);
+        List<Question> questions = new ArrayList<>();
+        Survey survey = new Survey("");
+        Question q = new Question("Kysymys 1", survey);
+        questions.add(q);
+        model.addAttribute("survey", survey);
+        model.addAttribute("questions", questions);
         return "addsurvey";
     }
 
     @GetMapping("edit/{id}")
     public String editSurvey(@PathVariable("id") Long id, Model model) {
-        Kysely kysely = kyselyRepository.findById(id).get();
-        List<Kysymys> kysymykset = kysely.getKysymykset();
-        model.addAttribute("kysely", kysely);
-        model.addAttribute("kysymykset", kysymykset);
+        Survey survey = surveyRepository.findById(id).get();
+        List<Question> questions = survey.getQuestions();
+        model.addAttribute("survey", survey);
+        model.addAttribute("questions", questions);
         return "addsurvey";
     }
 
     // Palauttaa No Content statuksen, jos kyselyä ei löydy
     @GetMapping("survey/{id}")
-    public @ResponseBody ResponseEntity<Kysely> getSurveyById(@PathVariable("id") Long id) {
+    public @ResponseBody ResponseEntity<Survey> getSurveyById(@PathVariable("id") Long id) {
         HttpStatus status = HttpStatus.NO_CONTENT;
-        Optional<Kysely> k = kyselyRepository.findById(id);
-        Kysely kysely = new Kysely();
-        if (k.isPresent()) {
-            kysely = k.get();
+        Optional<Survey> s = surveyRepository.findById(id);
+        Survey survey = new Survey();
+        if (s.isPresent()) {
+            survey = s.get();
             status = HttpStatus.OK;
         }
-        return new ResponseEntity<>(kysely, status);
+        return new ResponseEntity<>(survey, status);
     }
     
 }
