@@ -19,7 +19,7 @@ public class Survey {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
-	
+	private String info;
 	private String name;
 
 	@JsonManagedReference
@@ -53,6 +53,15 @@ public class Survey {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	
+	public String getInfo() {
+		return info;
+	}
+
+	public void setInfo(String info) {
+		this.info = info;
+	}
 
 	public List<Question> getQuestions() {
 		return questions;
@@ -77,7 +86,7 @@ public class Survey {
 
 	@Override
 	public String toString() {
-		return "Kysely [kyselyId=" + id + ", nimi=" + name + "]";
+		return "Kysely [kyselyId=" + id + ", nimi=" + name + ", kuvaus=" + info + "]";
 	}
 	
 }

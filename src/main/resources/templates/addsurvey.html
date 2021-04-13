@@ -4,6 +4,7 @@
 <head>
     <title>Lisää kysely</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
     <script th:inline="javascript">
         function addField() {
             let rowIndex = document.getElementById('questions').getElementsByTagName('tr').length;
@@ -56,12 +57,14 @@
 <body>
     <h1>Lisää kysely</h1>
     <form action="#" th:action="@{/save}" th:object=${survey} method="post">
-        <p>Kyselyn nimi:</p>
+        <h4>Kyselyn nimi:</h4>
         <input type="text" th:field="${survey.name}" />
         <input type="hidden" th:field="${survey.id}" />
-        <input type="submit" value="Submit" />
-        <input type="reset" value="Reset" />
-        <h2>Kysymykset</h2>
+        <input type="submit" value="Submit" class="btn btn-success"/>
+        <input type="reset" value="Reset" class="btn btn-danger" />
+        <h4>Kuvaus:</h4>
+        <input type="text" th:field="${survey.info}" />
+        <h4>Kysymykset</h4>
         <table id="questions">
             <tr th:each="question, stat : ${questions}">
                 <td>
@@ -69,12 +72,15 @@
                     <input type="hidden" th:field="*{questions[__${stat.index}__].id}"/>
                 </td>
                 <td>
-                    <button type="button" th:id="${stat.index}"
+                    <button type="button" class="btn btn-danger" th:id="${stat.index}"
                         th:attr="onclick=|removeField(${stat.index})|">-</button>
                 </td>
             </tr>
         </table>
-        <button type="button" onClick="addField()">lisää</button>
+        <button type="button" class="btn btn-success" onClick="addField()">lisää</button>
+        <br>
+        <br>
+        <a href="/surveys"><button class="btn btn-success">Kyselyt</button></a>
     </form>
 
 </body>

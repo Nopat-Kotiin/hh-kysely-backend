@@ -3,17 +3,19 @@
 <head>
 <title>Kyselyt</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
 </head>
 <body>
 <h1>Kyselyt</h1>
-	<table>
+	<table class="table table-striped">
 		<tr>
 			<th>Nimi</th>
 		</tr>
 
 		<tr th:each="survey : ${surveys}">
 			<td th:text="${survey.name}">Nimi</td>
-			<td><a th:href="@{/edit/{id}(id=${survey.id})}"><button>edit</button></a></td>
+			<td><a th:href="@{/edit/{id}(id=${survey.id})}"><button class="btn btn-success">edit</button></a></td>
+			<td><a th:href="@{/delete/{id}(id=${survey.id})}"><button class="btn btn-danger">delete</button></a></td>
 		</tr>
 	</table>
 	<a href="/addsurvey"><button class="btn btn-success">Lisää kysely </button></a>
