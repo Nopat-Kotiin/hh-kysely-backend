@@ -24,6 +24,12 @@ public class Answer {
 	@JoinColumn(name = "questionId")
 	private Question question;
 
+	public Answer() {
+		super();
+		this.answer = "";
+		this.question = null;
+	}
+
 	public Answer(String answer, Question question) {
 		this.answer = answer;
 		this.question = question;
