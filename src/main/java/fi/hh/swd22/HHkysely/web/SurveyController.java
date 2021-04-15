@@ -68,21 +68,25 @@ public class SurveyController {
     
     @GetMapping("addsurvey")
     public String addSurvey(Model model) {
+    	boolean edit = false;
         List<Question> questions = new ArrayList<>();
         Survey survey = new Survey("");
         Question q = new Question("Kysymys 1", survey);
         questions.add(q);
         model.addAttribute("survey", survey);
         model.addAttribute("questions", questions);
+        model.addAttribute("edit", edit);
         return "addsurvey";
     }
 
     @GetMapping("edit/{id}")
     public String editSurvey(@PathVariable("id") Long id, Model model) {
+    	boolean edit = true;
         Survey survey = surveyRepository.findById(id).get();
         List<Question> questions = survey.getQuestions();
         model.addAttribute("survey", survey);
         model.addAttribute("questions", questions);
+        model.addAttribute("edit", edit);
         return "addsurvey";
     }
 

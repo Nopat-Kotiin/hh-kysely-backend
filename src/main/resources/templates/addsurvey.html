@@ -6,19 +6,26 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
     <script th:inline="javascript">
-        function addField() {
+        
+    	// Function for adding a new field when "lisää kysely" is clicked
+    	function addField() {
+        	
+        	// Create an empty input field element
             let rowIndex = document.getElementById('questions').getElementsByTagName('tr').length;
             let input = document.createElement('input');
             input.id = "questions" + rowIndex + ".question";
             input.setAttribute("name", "questions[" + rowIndex + "].question");
             input.setAttribute("type", "text");
-
+            
+			// Create remove "-" button element
             let remove = document.createElement('button');
             remove.innerHTML = "-";
             remove.id = rowIndex;
             remove.setAttribute("onClick", "removeField(" + rowIndex + ")");
             remove.setAttribute("type", "button");
-
+            
+			// Insert new table row to "questions", 2 new empty table data
+			//and append input field and remove button to the newly created data
             let tr = document.getElementById("questions").insertRow(-1);
             let tdField = document.createElement('td');
             let tdRemove = document.createElement('td');
@@ -27,15 +34,23 @@
             tdRemove.appendChild(remove);
             tr.appendChild(tdRemove);
         }
-
+		
+    	// Function for removing a field when the minus button is clicked
         function removeField(id) {
+        	
             let table = document.getElementById('questions');
+            
+            // Iterate through the table rows
             for (var i = 0, row; row = table.rows[i]; i++) {
                 console.log(table.rows.length);
+                
+                //delete the row that called the function
                 let current = parseInt(row.getElementsByTagName('button')[0].id);
                 if (current === id) {
                     table.deleteRow(i);
                 }
+                
+                //arrange the table data back in order
                 if (current >= id) {
                     let input1 = table.rows[i].getElementsByTagName("input")[0];
                     let button = table.rows[i].getElementsByTagName("button")[0];
@@ -51,19 +66,39 @@
                 }
             }
         }
+    	function ResetNew(){
+    		
+    		document.getElementById("questions").innerHTML="<tr th:each='question, stat : ${questions}'>" +
+            "<td>" +
+            "<input type='text' th:field='*{questions[__${stat.index}__].question}' />" +
+            "<input type='hidden' th:field'*{questions[__${stat.index}__].id}'/>" +
+       "</td>" +
+        "<td>" +
+            "<button type='button' class='btn btn-danger' th:id='${stat.index}'"+
+                "th:attr='onclick=|removeField(${stat.index})|'>-</button>"+
+       " </td>"+
+    "</tr>";
+    		
+    		
+    		document.getElementById('sname').value = "";
+    		document.getElementById('sdescription').value = "";
+    		
+    		
+    	}
     </script>
 </head>
 
 <body>
-    <h1>Lisää kysely</h1>
+    <h1 th:if="${edit == false}" >Lisää kysely</h1>
+    <h1 th:unless="${edit == false}" >Muokkaa kyselyä</h1>
     <form action="#" th:action="@{/save}" th:object=${survey} method="post">
         <h4>Kyselyn nimi:</h4>
-        <input type="text" th:field="${survey.name}" />
+        <input type="text" id= "sname" th:field="${survey.name}" />
         <input type="hidden" th:field="${survey.id}" />
         <input type="submit" value="Submit" class="btn btn-success"/>
-        <input type="reset" value="Reset" class="btn btn-danger" />
+        <input th:if="${edit == false}" type="button" value="Reset" class="btn btn-danger" onClick="ResetNew()" />
         <h4>Kuvaus:</h4>
-        <input type="text" th:field="${survey.info}" />
+        <input type="text" id = "sdescription" th:field="${survey.info}" />
         <h4>Kysymykset</h4>
         <table id="questions">
             <tr th:each="question, stat : ${questions}">
@@ -80,8 +115,9 @@
         <button type="button" class="btn btn-success" onClick="addField()">lisää</button>
         <br>
         <br>
-        <a href="/surveys"><button class="btn btn-success">Kyselyt</button></a>
     </form>
+    
+     <a href="/surveys"><button class="btn btn-success">Kyselyt</button></a>
 
 </body>
 
