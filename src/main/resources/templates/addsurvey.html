@@ -49,12 +49,12 @@
                 
                 //delete the row that called the function
                 let current = parseInt(row.getElementsByTagName('button')[0].id);
-                if (current === id) {
+                if (current === id &&  id != 0) {
                     table.deleteRow(i);
                 }
                 
                 //arrange the table data back in order
-                if (current >= id) {
+                if (current >= id &&  id != 0) {
                     let input1 = table.rows[i].getElementsByTagName("input")[0];
                     let button = table.rows[i].getElementsByTagName("button")[0];
                     input1.id = input1.id.substr(0, 9) + i + input1.id.substr(10);
