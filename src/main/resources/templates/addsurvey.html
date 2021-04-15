@@ -92,7 +92,6 @@
 </head>
 
 <body>
-<div style="text-align:center">
     <h1 th:if="${edit == false}" >Lisää kysely</h1>
     <h1 th:unless="${edit == false}" >Muokkaa kyselyä</h1>
     <form action="#" th:action="@{/save}" th:object=${survey} method="post">
@@ -120,7 +119,6 @@
         <br>
         <br>
     </form>
-  </div>
     
      <a href="/surveys"><button class="btn btn-success">Kyselyt</button></a>
 
