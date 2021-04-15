@@ -31,6 +31,7 @@ public class Survey {
 	public Survey(String name) {
 		super();
 		this.name = name;
+		this.info = "";
 		this.questions = new ArrayList<>();
 	}
 
