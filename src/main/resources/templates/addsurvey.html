@@ -4,7 +4,9 @@
 <head>
     <title>Lisää kysely</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	
     <script th:inline="javascript">
         
     	// Function for adding a new field when "lisää kysely" is clicked
@@ -47,12 +49,12 @@
                 
                 //delete the row that called the function
                 let current = parseInt(row.getElementsByTagName('button')[0].id);
-                if (current === id) {
+                if (current === id &&  id != 0) {
                     table.deleteRow(i);
                 }
                 
                 //arrange the table data back in order
-                if (current >= id) {
+                if (current >= id &&  id != 0) {
                     let input1 = table.rows[i].getElementsByTagName("input")[0];
                     let button = table.rows[i].getElementsByTagName("button")[0];
                     input1.id = input1.id.substr(0, 9) + i + input1.id.substr(10);
@@ -69,16 +71,18 @@
         }
     	function ResetNew(){
     		
-    		document.getElementById("questions").innerHTML="<tr th:each='question, stat : ${questions}'>" +
-            "<td>" +
-            "<input type='text' th:field='*{questions[__${stat.index}__].question}' />" +
-            "<input type='hidden' th:field'*{questions[__${stat.index}__].id}'/>" +
-       "</td>" +
-        "<td>" +
-            "<button type='button' class='btn btn-danger' th:id='${stat.index}'"+
-                "th:attr='onclick=|removeField(${stat.index})|'>-</button>"+
-       " </td>"+
-    "</tr>";
+    		document.getElementById('questions').innerHTML="<table id='questions'>" +
+    		" <tbody><tr>" +
+    		" <td>" +
+    		" <input type='text' id='questions0.question' name='questions[0].question' value=''>" +
+    		"    <input type='hidden' id='questions0.id' name='questions[0].id' value='0'>" +
+    		"  </td>" +
+    		" <td>" +
+    		" <button type='button' class='btn btn-danger' id='0' onclick='removeField(0)'>-</button>" +
+    		"  </td>" +
+    		"  </tr>" +
+    		" </tbody></table>";
+
     		
     		
     		document.getElementById('sname').value = "";
