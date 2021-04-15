@@ -28,10 +28,10 @@ public class Survey {
 		
 	public Survey() {}
 	
-	public Survey(String name, String info) {
+	public Survey(String name) {
 		super();
 		this.name = name;
-		this.info = info;
+		this.info = "";
 		this.questions = new ArrayList<>();
 	}
 

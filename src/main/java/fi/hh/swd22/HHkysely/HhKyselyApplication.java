@@ -24,12 +24,12 @@ public class HhKyselyApplication {
 								QuestionRepository questionRepository,
 								AnswerRepository answerRepository) {
 		return (args) -> {
-			Survey kysely1 = new Survey("Testi 1", "Kuvaus 1");
+			Survey kysely1 = new Survey("Testi 1");
 			surveyRepository.save(kysely1);
-			surveyRepository.save(new Survey("Testi 2", "Kuvaus 2"));
-			surveyRepository.save(new Survey("Testi 3", "Kuvaus 3"));
-			surveyRepository.save(new Survey("Testi 4", "Kuvaus 4"));
-			surveyRepository.save(new Survey("Testi 5", "Kuvaus 5"));
+			surveyRepository.save(new Survey("Testi 2"));
+			surveyRepository.save(new Survey("Testi 3"));
+			surveyRepository.save(new Survey("Testi 4"));
+			surveyRepository.save(new Survey("Testi 5"));
 
 			Question kysymys1 = new Question("Kysymys 1", kysely1);
 			questionRepository.save(kysymys1);
