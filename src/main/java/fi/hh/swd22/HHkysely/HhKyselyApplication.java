@@ -7,8 +7,6 @@ import org.springframework.context.annotation.Bean;
 
 import fi.hh.swd22.HHkysely.domain.Survey;
 import fi.hh.swd22.HHkysely.domain.SurveyRepository;
-import fi.hh.swd22.HHkysely.domain.Answer;
-import fi.hh.swd22.HHkysely.domain.AnswerRepository;
 import fi.hh.swd22.HHkysely.domain.Question;
 import fi.hh.swd22.HHkysely.domain.QuestionRepository;
 
@@ -21,24 +19,19 @@ public class HhKyselyApplication {
 
 	@Bean
 	public CommandLineRunner demo(SurveyRepository surveyRepository,
-								QuestionRepository questionRepository,
-								AnswerRepository answerRepository) {
+								QuestionRepository questionRepository) {
 		return (args) -> {
-			Survey kysely1 = new Survey("Testi 1");
-			surveyRepository.save(kysely1);
-			surveyRepository.save(new Survey("Testi 2"));
-			surveyRepository.save(new Survey("Testi 3"));
-			surveyRepository.save(new Survey("Testi 4"));
-			surveyRepository.save(new Survey("Testi 5"));
+			Survey esimerkkiKysely = new Survey("Lempikysely");
+			esimerkkiKysely.setInfo("Tällä kyselyllä selvitetään tuttavien lempiruokia"
+				+ " ja juomia, sekä lempivärejä tulevaa juhlaa varten.");
+			surveyRepository.save(esimerkkiKysely);
 
-			Question kysymys1 = new Question("Kysymys 1", kysely1);
-			questionRepository.save(kysymys1);
-			Question kysymys2 = new Question("Kysymys 2", kysely1);
-			questionRepository.save(kysymys2);
-
-			Answer answer = new Answer("Vastaus", kysymys1);
-			answerRepository.save(answer);
-			answerRepository.save(new Answer("Hei", kysymys2));
+			Question q1 = new Question("Mikä on lempiruokasi?", esimerkkiKysely);
+			Question q2 = new Question("Mikä on lempijuomasi?", esimerkkiKysely);
+			Question q3 = new Question("Mikä on lempivärisi?", esimerkkiKysely);
+			questionRepository.save(q1);
+			questionRepository.save(q2);
+			questionRepository.save(q3);
 		};
 	}
 
