@@ -45,7 +45,6 @@
             
             // Iterate through the table rows
             for (var i = 0, row; row = table.rows[i]; i++) {
-                console.log(table.rows.length);
                 
                 //delete the row that called the function
                 let current = parseInt(row.getElementsByTagName('button')[0].id);
@@ -92,11 +91,27 @@
     	}
     	
     	function validateForm() {
-    		var x = document.forms["surveyForm"]["sname"].value;
-    		if(x == "") {
-    			alert("Field must be filled out");
-    			return false;
+            var msg = "";
+    		const surveyName = document.forms["surveyForm"]["sname"].value;
+    		if(surveyName === "") {
+    			msg += "Survey must have a name";
     		}
+
+            var emptyRows = 0;
+            const questions = document.getElementById('questions').getElementsByTagName('input');
+            for (var i = 0, row; row = questions[i]; i++) {
+                if (row.value === "") {
+                    emptyRows++;
+                }
+            }
+
+            if (emptyRows > 0) {
+                msg += "\nand you have " + emptyRows + " empty questions";
+            }
+            if (msg.length > 0) {
+                alert(msg);
+                return false;
+            }
     	}
     	  
     </script>
@@ -107,7 +122,7 @@
     <h1 th:unless="${edit == false}" >Muokkaa kyselyä</h1>
     <form name="surveyForm" action="#" th:action="@{/save}" th:object=${survey} onsubmit="return validateForm()" method="post">
         <h4>Kyselyn nimi:</h4>
-        <input type="text" id= "sname" th:field="${survey.name}" />
+        <input type="text" id="sname" th:field="${survey.name}" />
         <input type="hidden" th:field="${survey.id}" />
         <input type="submit" value="Submit" class="btn btn-success" />
         <input th:if="${edit == false}" type="button" value="Reset" class="btn btn-danger" onClick="ResetNew()" />

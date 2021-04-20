@@ -33,7 +33,12 @@ public class SurveyController {
     @Autowired
     private QuestionRepository questionRepository;
 
-    @GetMapping("/kyselyt")
+    @GetMapping("/")
+    public String indexRedirect() {
+        return "redirect:/surveys";
+    }
+
+    @GetMapping("/getsurveys")
     public @ResponseBody List<Survey> getKyselyt() {
         return (List<Survey>) surveyRepository.findAll();
     }
