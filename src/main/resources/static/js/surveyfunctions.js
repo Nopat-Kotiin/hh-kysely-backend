@@ -46,7 +46,7 @@ function removeField(id) {
         }
 
         //arrange the table data back in order
-        if (current >= id && id != 0) {
+        if (current >= id) {
             let input1 = table.rows[i].getElementsByTagName("input")[0];
             let button = table.rows[i].getElementsByTagName("button")[0];
             input1.id = input1.id.substr(0, 9) + i + input1.id.substr(10);
