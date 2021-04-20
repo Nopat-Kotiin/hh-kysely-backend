@@ -39,7 +39,7 @@ public class SurveyController {
     }
 
     @GetMapping("/getsurveys")
-    public @ResponseBody List<Survey> getKyselyt() {
+    public @ResponseBody List<Survey> getRestSurveys() {
         return (List<Survey>) surveyRepository.findAll();
     }
     
