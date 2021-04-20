@@ -90,17 +90,26 @@
     		
     		
     	}
+    	
+    	function validateForm() {
+    		var x = document.forms["surveyForm"]["sname"].value;
+    		if(x == "") {
+    			alert("Field must be filled out");
+    			return false;
+    		}
+    	}
+    	  
     </script>
 </head>
 
 <body>
     <h1 th:if="${edit == false}" >Lisää kysely</h1>
     <h1 th:unless="${edit == false}" >Muokkaa kyselyä</h1>
-    <form action="#" th:action="@{/save}" th:object=${survey} method="post">
+    <form name="surveyForm" action="#" th:action="@{/save}" th:object=${survey} onsubmit="return validateForm()" method="post">
         <h4>Kyselyn nimi:</h4>
         <input type="text" id= "sname" th:field="${survey.name}" />
         <input type="hidden" th:field="${survey.id}" />
-        <input type="submit" value="Submit" class="btn btn-success"/>
+        <input type="submit" value="Submit" class="btn btn-success" />
         <input th:if="${edit == false}" type="button" value="Reset" class="btn btn-danger" onClick="ResetNew()" />
         <h4>Kuvaus:</h4>
         <input type="text" id = "sdescription" th:field="${survey.info}" />
