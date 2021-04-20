@@ -103,6 +103,8 @@ public class SurveyController {
         Survey survey = new Survey();
         if (s.isPresent()) {
             survey = s.get();
+            // Ei palauteta vastauksia tässä
+            survey.getQuestions().forEach(q -> q.setAnswers(null));
             status = HttpStatus.OK;
         }
         return new ResponseEntity<>(survey, status);

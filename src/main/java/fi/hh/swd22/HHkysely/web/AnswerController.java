@@ -1,9 +1,13 @@
 package fi.hh.swd22.HHkysely.web;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,5 +47,18 @@ public class AnswerController {
         }
 
         return new ResponseEntity<>(resp, status);
+    }
+
+    // Palauttaa No Content statuksen, jos kyselyä ei löydy
+    @GetMapping("getanswers/{id}")
+    public ResponseEntity<Survey> getSurveyById(@PathVariable("id") Long id) {
+        HttpStatus status = HttpStatus.NO_CONTENT;
+        Optional<Survey> s = surveyRepository.findById(id);
+        Survey survey = new Survey();
+        if (s.isPresent()) {
+            survey = s.get();
+            status = HttpStatus.OK;
+        }
+        return new ResponseEntity<>(survey, status);
     }
 }
