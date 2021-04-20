@@ -61,7 +61,7 @@ function addField() {
             var msg = "";
     		const surveyName = document.forms["surveyForm"]["sname"].value;
     		if(surveyName === "") {
-    			msg += "Survey must have a name";
+    			msg += "- Survey must have a name";
     		}
 
             var emptyRows = 0;
@@ -73,7 +73,7 @@ function addField() {
             }
 
             if (emptyRows > 0) {
-                msg += "\nand you have " + emptyRows + " empty questions";
+                msg += "\n- You have " + emptyRows + " empty questions";
             }
             if (msg.length > 0) {
                 alert(msg);
