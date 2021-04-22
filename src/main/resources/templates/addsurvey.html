@@ -26,6 +26,10 @@
                 <td>
                     <input type="text" th:field="*{questions[__${stat.index}__].question}" />
                     <input type="hidden" th:field="*{questions[__${stat.index}__].id}"/>
+                    <input type="hidden" th:field="*{questions[__${stat.index}__].type}"/>
+                    <div th:if="*{questions[__${stat.index}__].type == 'radio'}">
+                        <div th:each="choice : *{questions[__${stat.index}__].choices}" th:text="${choice}"></div>
+                    </div>
                 </td>
                 <td>
                     <button type="button" class="btn btn-danger" th:id="${stat.index}"
