@@ -40,6 +40,10 @@ public class SurveyController {
 
     @GetMapping("/getsurveys")
     public @ResponseBody List<Survey> getRestSurveys() {
+        List<Survey> surveys = (List<Survey>) surveyRepository.findAll();
+        for (Survey s : surveys) {
+            s.getQuestions().forEach(q -> q.setAnswers(null));
+        }
         return (List<Survey>) surveyRepository.findAll();
     }
     
