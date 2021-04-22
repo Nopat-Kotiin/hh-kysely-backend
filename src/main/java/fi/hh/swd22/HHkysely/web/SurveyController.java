@@ -54,6 +54,7 @@ public class SurveyController {
 		return "surveys";
     }
     
+    // TODO: remove duplicate getQuestions calls
     @RequestMapping(value="/save", method = RequestMethod.POST)
     public String saveSurvey(@ModelAttribute Survey survey) {
         surveyRepository.save(survey);

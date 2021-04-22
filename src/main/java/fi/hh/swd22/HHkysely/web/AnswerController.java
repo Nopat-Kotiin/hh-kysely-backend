@@ -34,6 +34,7 @@ public class AnswerController {
         String resp = "answers submitted";
 
         // Jos vastaavaa kyselyä ei ole tai kysymyslistojen määrät ovat eri, palautetaan virhe
+        // TODO: change teapot to a more suitable response
         if (!surveyRepository.findById(survey.getId()).isPresent() ||
             (survey.getQuestions().size() != surveyRepository.findById(survey.getId()).get().getQuestions().size())) {
             status = HttpStatus.I_AM_A_TEAPOT;
