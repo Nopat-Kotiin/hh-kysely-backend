@@ -9,7 +9,6 @@ import fi.hh.swd22.HHkysely.domain.Survey;
 import fi.hh.swd22.HHkysely.domain.SurveyRepository;
 import fi.hh.swd22.HHkysely.domain.TextQuestion;
 import fi.hh.swd22.HHkysely.domain.RadioQuestion;
-import fi.hh.swd22.HHkysely.domain.Question;
 import fi.hh.swd22.HHkysely.domain.QuestionRepository;
 
 @SpringBootApplication

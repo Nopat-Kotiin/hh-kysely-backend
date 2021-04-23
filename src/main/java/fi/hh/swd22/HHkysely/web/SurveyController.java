@@ -139,9 +139,8 @@ public class SurveyController {
     public String addSurvey(Model model) {
     	boolean edit = false;
         Survey survey = new Survey("");
-        survey.getQuestions().add(new TextQuestion("Kysymys 1", survey));
+        survey.getQuestions().add(new TextQuestion());
         model.addAttribute("survey", survey);
-        model.addAttribute("questions", survey.getQuestions());
         model.addAttribute("edit", edit);
         return "addsurvey";
     }
@@ -150,9 +149,7 @@ public class SurveyController {
     public String editSurvey(@PathVariable("id") Long id, Model model) {
     	boolean edit = true;
         Survey survey = surveyRepository.findById(id).get();
-        List<Question> questions = survey.getQuestions();
         model.addAttribute("survey", survey);
-        model.addAttribute("questions", questions);
         model.addAttribute("edit", edit);
         return "addsurvey";
     }
