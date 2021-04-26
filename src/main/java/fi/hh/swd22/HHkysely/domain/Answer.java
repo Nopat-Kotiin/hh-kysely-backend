@@ -17,6 +17,7 @@ public class Answer {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
+	// TODO: määrittele miten vastaus säilötään radio- ja checkbox- kysymyksille
 	private String answer;
 	
 	@JsonBackReference
