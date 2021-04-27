@@ -16,13 +16,14 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-public class Question {
+public abstract class Question {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
 	private String question;
+	private String type;
 
 	@JsonBackReference
 	@ManyToOne
@@ -35,7 +36,7 @@ public class Question {
 
 	public Question() {}
 	
-	public Question(String question, Survey survey) {
+	public Question(String type, String question, Survey survey) {
 		super();
 		this.question = question;
 		this.survey = survey;
@@ -47,6 +48,14 @@ public class Question {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public String getQuestion() {

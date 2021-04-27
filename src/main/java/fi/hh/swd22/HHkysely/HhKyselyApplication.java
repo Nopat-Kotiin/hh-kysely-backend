@@ -7,7 +7,8 @@ import org.springframework.context.annotation.Bean;
 
 import fi.hh.swd22.HHkysely.domain.Survey;
 import fi.hh.swd22.HHkysely.domain.SurveyRepository;
-import fi.hh.swd22.HHkysely.domain.Question;
+import fi.hh.swd22.HHkysely.domain.TextQuestion;
+import fi.hh.swd22.HHkysely.domain.RadioQuestion;
 import fi.hh.swd22.HHkysely.domain.QuestionRepository;
 
 @SpringBootApplication
@@ -26,9 +27,14 @@ public class HhKyselyApplication {
 				+ " ja juomia, sekä lempivärejä tulevaa juhlaa varten.");
 			surveyRepository.save(esimerkkiKysely);
 
-			Question q1 = new Question("Mikä on lempiruokasi?", esimerkkiKysely);
-			Question q2 = new Question("Mikä on lempijuomasi?", esimerkkiKysely);
-			Question q3 = new Question("Mikä on lempivärisi?", esimerkkiKysely);
+			TextQuestion q1 = new TextQuestion("Mikä on lempiruokasi?", esimerkkiKysely);
+			TextQuestion q2 = new TextQuestion("Mikä on lempijuomasi?", esimerkkiKysely);
+			RadioQuestion q3 = new RadioQuestion("Mikä on lempivärisi?", esimerkkiKysely);
+			q3.getChoices().add("E");
+			q3.getChoices().add("E");
+			q3.getChoices().add("E");
+			q3.getChoices().add("E");
+			q3.getChoices().add("E");
 			questionRepository.save(q1);
 			questionRepository.save(q2);
 			questionRepository.save(q3);

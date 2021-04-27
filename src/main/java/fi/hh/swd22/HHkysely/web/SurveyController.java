@@ -1,16 +1,25 @@
 package fi.hh.swd22.HHkysely.web;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +28,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import fi.hh.swd22.HHkysely.domain.Survey;
 import fi.hh.swd22.HHkysely.domain.SurveyRepository;
+import fi.hh.swd22.HHkysely.domain.TextQuestion;
+import fi.hh.swd22.HHkysely.domain.RadioQuestion;
 import fi.hh.swd22.HHkysely.domain.Question;
 import fi.hh.swd22.HHkysely.domain.QuestionRepository;
 
@@ -36,6 +47,54 @@ public class SurveyController {
     @GetMapping("/")
     public String indexRedirect() {
         return "redirect:/surveys";
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder webDataBinder, HttpServletRequest httpServletRequest){
+        if (!"POST".equalsIgnoreCase(httpServletRequest.getMethod())) {
+            return;
+        }
+
+        Object nonCastedTarget = webDataBinder.getTarget();
+        if (nonCastedTarget == null || !(nonCastedTarget instanceof Survey)) {
+            return;
+        }
+
+        Pattern pattern = Pattern.compile("questions\\[(\\d+)]\\.type");
+
+        Map<Integer, String> types = new HashMap<>();
+        Enumeration<String> parameterNames = httpServletRequest.getParameterNames();
+        while (parameterNames.hasMoreElements()) {
+            String element = parameterNames.nextElement();
+            System.out.println(element);
+            Matcher matcher = pattern.matcher(element);
+            if (!matcher.matches()) {
+                continue;
+            }
+
+            types.put(Integer.parseInt(matcher.group(1)), httpServletRequest.getParameter(element));
+        }
+
+        Survey target = (Survey) nonCastedTarget;
+        List<Question> questionList = target.getQuestions();
+        if (questionList == null) {
+            target.setQuestions(new ArrayList<>());
+        }
+
+        types.keySet().stream().sorted().forEach(key -> {
+            switch (types.get(key)) {
+                case "text":
+                    target.getQuestions().add(new TextQuestion());
+                    break;
+
+                case "radio":
+                    target.getQuestions().add(new RadioQuestion());
+                    break;
+                
+                default:
+                    throw new IllegalStateException("Unknown type: " + key);
+            }
+        });
     }
 
     @GetMapping("/getsurveys")
@@ -79,12 +138,9 @@ public class SurveyController {
     @GetMapping("addsurvey")
     public String addSurvey(Model model) {
     	boolean edit = false;
-        List<Question> questions = new ArrayList<>();
         Survey survey = new Survey("");
-        Question q = new Question("Kysymys 1", survey);
-        questions.add(q);
+        survey.getQuestions().add(new TextQuestion());
         model.addAttribute("survey", survey);
-        model.addAttribute("questions", questions);
         model.addAttribute("edit", edit);
         return "addsurvey";
     }
@@ -93,9 +149,7 @@ public class SurveyController {
     public String editSurvey(@PathVariable("id") Long id, Model model) {
     	boolean edit = true;
         Survey survey = surveyRepository.findById(id).get();
-        List<Question> questions = survey.getQuestions();
         model.addAttribute("survey", survey);
-        model.addAttribute("questions", questions);
         model.addAttribute("edit", edit);
         return "addsurvey";
     }

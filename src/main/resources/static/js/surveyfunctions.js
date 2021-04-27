@@ -7,6 +7,13 @@ function addField() {
     input.setAttribute("name", "questions[" + rowIndex + "].question");
     input.setAttribute("type", "text");
 
+    // Create hidden field for type
+    let typeInput = document.createElement('input');
+    typeInput.value = "text";
+    typeInput.type = "hidden";
+    typeInput.id = "questions" + rowIndex + ".type";
+    typeInput.setAttribute("name", "questions[" + rowIndex + "].type");
+
     // Create remove "-" button element
     let remove = document.createElement('button');
     remove.innerHTML = "-";
@@ -21,6 +28,7 @@ function addField() {
     let tdField = document.createElement('td');
     let tdRemove = document.createElement('td');
     tdField.appendChild(input);
+    tdField.appendChild(typeInput);
     tr.appendChild(tdField);
     tdRemove.appendChild(remove);
     tr.appendChild(tdRemove);
@@ -47,15 +55,12 @@ function removeField(id) {
 
         //arrange the table data back in order
         if (current >= id) {
-            let input1 = table.rows[i].getElementsByTagName("input")[0];
-            let button = table.rows[i].getElementsByTagName("button")[0];
-            input1.id = input1.id.substr(0, 9) + i + input1.id.substr(10);
-            input1.name = input1.name.substr(0, 10) + i + input1.name.substr(11);
-            if (table.rows[i].getElementsByTagName("input").length > 1) {
-                let input2 = table.rows[i].getElementsByTagName("input")[1];
-                input2.id = input2.id.substr(0, 9) + i + input2.id.substr(10);
-                input2.name = input2.name.substr(0, 10) + i + input2.name.substr(11);
+            for (var j = 0, element; element = table.rows[i].getElementsByTagName("input")[j]; j++) {
+                let input = table.rows[i].getElementsByTagName("input")[0];
+                input.id = input.id.substr(0, 9) + i + input.id.substr(10);
+                input.name = input.name.substr(0, 10) + i + input.name.substr(11);
             }
+            let button = table.rows[i].getElementsByTagName("button")[0];
             button.id = i;
             button.setAttribute("onClick", "removeField(" + i + ")");
         }

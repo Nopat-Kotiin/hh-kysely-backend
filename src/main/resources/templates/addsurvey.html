@@ -22,10 +22,14 @@
         <textarea rows="3" cols="40" id = "sdescription" th:field="${survey.info}"></textarea>
         <h4>Kysymykset</h4>
         <table id="questions">
-            <tr th:each="question, stat : ${questions}">
+            <tr th:each="_, stat : *{questions}">
                 <td>
                     <input type="text" th:field="*{questions[__${stat.index}__].question}" />
                     <input type="hidden" th:field="*{questions[__${stat.index}__].id}"/>
+                    <input type="hidden" th:field="*{questions[__${stat.index}__].type}"/>
+                    <div th:if="*{questions[__${stat.index}__].type == 'radio'}">
+                        <input th:each="_, cStat : *{questions[__${stat.index}__].choices}" th:field="*{questions[__${stat.index}__].choices[__${cStat.index}__]}"></input>
+                    </div>
                 </td>
                 <td>
                     <button type="button" class="btn btn-danger" th:id="${stat.index}"
