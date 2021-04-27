@@ -1,7 +1,9 @@
 function addField() {
 
+    let choice = document.getElementById('choices').value;
+
     // Create an empty input field element
-    let rowIndex = document.getElementById('questions').getElementsByTagName('tr').length;
+    let rowIndex = document.getElementById('questions').getElementsByClassName('question-div').length;
     let input = document.createElement('input');
     input.id = "questions" + rowIndex + ".question";
     input.setAttribute("name", "questions[" + rowIndex + "].question");
@@ -9,7 +11,17 @@ function addField() {
 
     // Create hidden field for type
     let typeInput = document.createElement('input');
-    typeInput.value = "text";
+    switch(choice) {
+        case 'text':
+            typeInput.value = "text";
+            break;
+        case 'radiobutton':
+            typeInput.value = "radio";
+            break;
+        case 'checkbox':
+            typeInput.value = "checkbox";
+            break;
+    }
     typeInput.type = "hidden";
     typeInput.id = "questions" + rowIndex + ".type";
     typeInput.setAttribute("name", "questions[" + rowIndex + "].type");
@@ -24,37 +36,77 @@ function addField() {
 
     // Insert new table row to "questions", 2 new empty table data
     //and append input field and remove button to the newly created data
-    let tr = document.getElementById("questions").insertRow(-1);
-    let tdField = document.createElement('td');
-    let tdRemove = document.createElement('td');
-    tdField.appendChild(input);
-    tdField.appendChild(typeInput);
-    tr.appendChild(tdField);
-    tdRemove.appendChild(remove);
-    tr.appendChild(tdRemove);
+    let newDiv = document.createElement('div');
+    document.getElementById("questions").appendChild(newDiv);
+    newDiv.className = "question-div";
+
+    let wrapper = document.createElement('div');
+    wrapper.appendChild(input);
+    wrapper.appendChild(typeInput);
+    wrapper.appendChild(remove);
+    newDiv.appendChild(wrapper);
+
+    // If the question type is not text, add one choice
+    if(choice !== 'text') {
+        let choiceDiv = document.createElement('div');
+
+        let choiceInput = document.createElement('input');
+        choiceInput.id = "questions" + rowIndex + ".choices0";
+        choiceInput.setAttribute("name", "questions[" + rowIndex + "].choices[0]");
+        choiceInput.className = "choice";
+
+        let removeChoice = document.createElement('button');
+        removeChoice.innerHTML = "-";
+        removeChoice.setAttribute("onClick", "removeChoice(" + rowIndex + ", " + 0 + ")");
+        removeChoice.className = "btn btn-danger";
+        removeChoice.setAttribute("type", "button");
+        removeChoice.style.marginLeft = '50px';
+
+        let addChoice = document.createElement('button');
+        addChoice.innerHTML = "+";
+        addChoice.setAttribute("onClick", "addChoice(" + rowIndex + ", " + 0 + ")");
+        addChoice.className = "btn btn-success";
+        addChoice.setAttribute("type", "button");
+
+        choiceDiv.appendChild(removeChoice);
+        choiceDiv.appendChild(choiceInput);
+        choiceDiv.appendChild(addChoice);
+        newDiv.appendChild(choiceDiv);
+
+    }
 }
 
+// TODO: this function is WIP and everything below is not done
 // Function for removing a field when the minus button is clicked
 function removeField(id) {
 
-    let table = document.getElementById('questions');
+    let parentDiv = document.getElementById('questions');
+    let questions = document.getElementsByClassName('question-div');
 
-    if (table.rows.length === 1) {
+    if (questions.length === 1) {
         alert("You must have at least one question");
         return;
     }
 
+    let toBeRemoved;
     // Iterate through the table rows
-    for (var i = 0, row; row = table.rows[i]; i++) {
+    for (var i = 0, row; row = questions[i]; i++) {
+
+        let current = parseInt(row.getElementsByTagName('button')[0].id);
+        console.log(current, id);
 
         //delete the row that called the function
-        let current = parseInt(row.getElementsByTagName('button')[0].id);
         if (current === id) {
-            table.deleteRow(i);
+            toBeRemoved = current;
+            //parentDiv.removeChild(row.parentNode);
+        }
+
+        if (current >= id) {
+            console.log(row.getElementsByTagName('input'));
         }
 
         //arrange the table data back in order
-        if (current >= id) {
+        /* if (current >= id) {
             for (var j = 0, element; element = table.rows[i].getElementsByTagName("input")[j]; j++) {
                 let input = table.rows[i].getElementsByTagName("input")[0];
                 input.id = input.id.substr(0, 9) + i + input.id.substr(10);
@@ -63,8 +115,9 @@ function removeField(id) {
             let button = table.rows[i].getElementsByTagName("button")[0];
             button.id = i;
             button.setAttribute("onClick", "removeField(" + i + ")");
-        }
+        } */
     }
+    parentDiv.removeChild(questions[toBeRemoved].parentNode);
 }
 
 function validateForm() {
@@ -110,5 +163,8 @@ function ResetNew() {
     document.getElementById('sname').value = "";
     document.getElementById('sdescription').value = "";
 
+}
 
+function removeChoice(qId, cId) {
+    console.log(qId, cId);
 }

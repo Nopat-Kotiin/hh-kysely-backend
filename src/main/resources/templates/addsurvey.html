@@ -4,50 +4,65 @@
 <head>
     <title>Lisää kysely</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	
-	<link rel="stylesheet" href="/css/bootstrap.min.css">
-	<script type="text/javascript" src="/js/surveyfunctions.js"></script>
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script type="text/javascript" src="/js/surveyfunctions.js"></script>
 </head>
 
 <body>
-    <h1 th:if="${edit == false}" >Lisää kysely</h1>
-    <h1 th:unless="${edit == false}" >Muokkaa kyselyä</h1>
-    <form name="surveyForm" action="#" th:action="@{/save}" th:object=${survey} onsubmit="return validateForm()" method="post">
+    <h1 th:if="${edit == false}">Lisää kysely</h1>
+    <h1 th:unless="${edit == false}">Muokkaa kyselyä</h1>
+    <form name="surveyForm" action="#" th:action="@{/save}" th:object=${survey} onsubmit="return validateForm()"
+        method="post">
         <h4>Kyselyn nimi:</h4>
         <input type="text" id="sname" th:field="${survey.name}" />
         <input type="hidden" th:field="${survey.id}" />
         <input type="submit" value="Submit" class="btn btn-success" />
         <input th:if="${edit == false}" type="button" value="Reset" class="btn btn-danger" onClick="ResetNew()" />
         <h4>Kuvaus:</h4>
-        <textarea rows="3" cols="40" id = "sdescription" th:field="${survey.info}"></textarea>
+        <textarea rows="3" cols="40" id="sdescription" th:field="${survey.info}"></textarea>
         <h4>Kysymykset</h4>
-        <table id="questions">
-            <tr th:each="_, stat : *{questions}">
-                <td th:if="*{questions[__${stat.index}__].type == 'text'}">
-                    <input type="text" th:field="*{questions[__${stat.index}__].question}" />
-                    <input type="hidden" th:field="*{questions[__${stat.index}__].id}"/>
-                    <input type="hidden" th:field="*{questions[__${stat.index}__].type}"/>
-                </td>
-                <td th:unless="*{questions[__${stat.index}__].type == 'text'}">
-                    <input type="text" th:field="*{questions[__${stat.index}__].question}" />
-                    <input type="hidden" th:field="*{questions[__${stat.index}__].id}"/>
-                    <input type="hidden" th:field="*{questions[__${stat.index}__].type}"/>
-                    <div th:if="*{questions[__${stat.index}__].type == 'radio'}">
-                        <input th:each="_, cStat : *{questions[__${stat.index}__].choices}" th:field="*{questions[__${stat.index}__].choices[__${cStat.index}__]}"></input>
+        <div id="questions">
+            <div th:each="_, stat : *{questions}">
+                <div th:if="*{questions[__${stat.index}__].type == 'text'}" class="question-div">
+                    <div th:if="*{questions[__${stat.index}__].type == 'text'}">
+                        <input type="text" th:field="*{questions[__${stat.index}__].question}" />
+                        <input type="hidden" th:field="*{questions[__${stat.index}__].id}" />
+                        <input type="hidden" th:field="*{questions[__${stat.index}__].type}" />
+                        <button type="button" class="btn btn-danger" th:id="${stat.index}"
+                            th:attr="onclick=|removeField(${stat.index})|">-</button>
                     </div>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-danger" th:id="${stat.index}"
-                        th:attr="onclick=|removeField(${stat.index})|">-</button>
-                </td>
-            </tr>
-        </table>
-        <button type="button" class="btn btn-success" onClick="addField()">lisää</button>
+                </div>
+                <div th:unless="*{questions[__${stat.index}__].type == 'text'}" class="question-div">
+                    <div>
+                        <input type="text" th:field="*{questions[__${stat.index}__].question}" />
+                        <input type="hidden" th:field="*{questions[__${stat.index}__].id}" />
+                        <input type="hidden" th:field="*{questions[__${stat.index}__].type}" />
+                        <button type="button" class="btn btn-danger" th:id="${stat.index}"
+                            th:attr="onclick=|removeField(${stat.index})|">-</button>
+                    </div>
+                    <div th:each="_, cStat : *{questions[__${stat.index}__].choices}">
+                        <button style="margin-left: 50px" type="button" class="btn btn-danger"
+                            th:attr="onclick=|removeChoice(${stat.index}, ${cStat.index})|">-</button>
+                        <input class="choice"
+                            th:field="*{questions[__${stat.index}__].choices[__${cStat.index}__]}"></input>
+                        <button th:if="${cStat.last}" type="button" class="btn btn-success"
+                            th:attr="onclick=|addChoice(${stat.index}, ${cStat.index})|">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="button" class="btn btn-success" onClick="addField()">lisää kysymys</button>
+        <select id="choices">
+            <option>text</option>
+            <option>radiobutton</option>
+            <option>checkbox</option>
+        </select>
         <br>
         <br>
     </form>
-    
-     <a href="/surveys"><button class="btn btn-success">Kyselyt</button></a>
+
+    <a href="/surveys"><button class="btn btn-success">Kyselyt</button></a>
 </body>
 
 </html>
