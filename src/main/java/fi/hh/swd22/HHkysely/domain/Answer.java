@@ -7,11 +7,17 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import java.util.List;
+
+import javax.persistence.ElementCollection;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 
 public class Answer {
+	
+	@ElementCollection
+	private List<Integer> selections;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -58,6 +64,16 @@ public class Answer {
 
 	public void setQuestion(Question question) {
 		this.question = question;
+	}
+
+	public List<Integer> getSelections() {
+		return selections;
+	}
+
+	public void setSelections(List<Integer> selections) {
+		this.selections = selections;
 	}	
+	
+	
 
 }
