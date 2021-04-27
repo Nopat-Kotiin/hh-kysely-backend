@@ -49,6 +49,8 @@ public class SurveyController {
         return "redirect:/surveys";
     }
 
+    // function based on:
+    // https://stackoverflow.com/questions/37847549/spring-mvc-form-data-binding-of-a-list-of-abstract-class
     @InitBinder
     public void initBinder(WebDataBinder webDataBinder, HttpServletRequest httpServletRequest){
         if (!"POST".equalsIgnoreCase(httpServletRequest.getMethod())) {
