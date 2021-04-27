@@ -30,6 +30,7 @@ import fi.hh.swd22.HHkysely.domain.Survey;
 import fi.hh.swd22.HHkysely.domain.SurveyRepository;
 import fi.hh.swd22.HHkysely.domain.TextQuestion;
 import fi.hh.swd22.HHkysely.domain.RadioQuestion;
+import fi.hh.swd22.HHkysely.domain.CheckboxQuestion;
 import fi.hh.swd22.HHkysely.domain.Question;
 import fi.hh.swd22.HHkysely.domain.QuestionRepository;
 
@@ -90,6 +91,10 @@ public class SurveyController {
                 case "radio":
                     target.getQuestions().add(new RadioQuestion());
                     break;
+                
+                case "checkbox":
+                	target.getQuestions().add(new CheckboxQuestion());
+                	break;
                 
                 default:
                     throw new IllegalStateException("Unknown type: " + key);
