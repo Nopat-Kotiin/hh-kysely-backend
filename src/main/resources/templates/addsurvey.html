@@ -23,7 +23,12 @@
         <h4>Kysymykset</h4>
         <table id="questions">
             <tr th:each="_, stat : *{questions}">
-                <td>
+                <td th:if="*{questions[__${stat.index}__].type == 'text'}">
+                    <input type="text" th:field="*{questions[__${stat.index}__].question}" />
+                    <input type="hidden" th:field="*{questions[__${stat.index}__].id}"/>
+                    <input type="hidden" th:field="*{questions[__${stat.index}__].type}"/>
+                </td>
+                <td th:unless="*{questions[__${stat.index}__].type == 'text'}">
                     <input type="text" th:field="*{questions[__${stat.index}__].question}" />
                     <input type="hidden" th:field="*{questions[__${stat.index}__].id}"/>
                     <input type="hidden" th:field="*{questions[__${stat.index}__].type}"/>
