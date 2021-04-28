@@ -30,11 +30,10 @@ public class HhKyselyApplication {
 			TextQuestion q1 = new TextQuestion("Mikä on lempiruokasi?", esimerkkiKysely);
 			TextQuestion q2 = new TextQuestion("Mikä on lempijuomasi?", esimerkkiKysely);
 			RadioQuestion q3 = new RadioQuestion("Mikä on lempivärisi?", esimerkkiKysely);
-			q3.getChoices().add("E");
-			q3.getChoices().add("E");
-			q3.getChoices().add("E");
-			q3.getChoices().add("E");
-			q3.getChoices().add("E");
+			q3.getChoices().add("A");
+			q3.getChoices().add("B");
+			q3.getChoices().add("C");
+			q3.getChoices().add("D");
 			questionRepository.save(q1);
 			questionRepository.save(q2);
 			questionRepository.save(q3);

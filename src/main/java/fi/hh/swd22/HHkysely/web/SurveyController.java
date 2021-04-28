@@ -69,7 +69,6 @@ public class SurveyController {
         Enumeration<String> parameterNames = httpServletRequest.getParameterNames();
         while (parameterNames.hasMoreElements()) {
             String element = parameterNames.nextElement();
-            System.out.println(element);
             Matcher matcher = pattern.matcher(element);
             if (!matcher.matches()) {
                 continue;
@@ -119,14 +118,16 @@ public class SurveyController {
 		model.addAttribute("surveys", surveys);
 		return "surveys";
     }
-    
-    // TODO: remove duplicate getQuestions calls
+
     @RequestMapping(value="/save", method = RequestMethod.POST)
     public String saveSurvey(@ModelAttribute Survey survey) {
+
+        List<Question> questions = survey.getQuestions();
+        // Pitää asettaa tyhjä lista väliaikaisesti, ettei kysymyksiä tallenneta tuplana tietokantaan
+        survey.setQuestions(new ArrayList<Question>());
         surveyRepository.save(survey);
 
-        for (Question q : survey.getQuestions()) {
-            System.out.println(q);
+        for (Question q : questions) {
             if (q.getQuestion() != null) {
                 q.setSurvey(survey);
                 questionRepository.save(q);
@@ -134,7 +135,7 @@ public class SurveyController {
         }
 
         for (Question q : questionRepository.findBySurveyId(survey.getId())) {
-            if (!survey.getQuestions().contains(q)) {
+            if (!questions.contains(q)) {
                 q.getSurvey().dismissQuestion(q);
                 questionRepository.delete(q);
             }

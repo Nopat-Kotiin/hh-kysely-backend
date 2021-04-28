@@ -100,6 +100,6 @@ public abstract class Question {
 
 	@Override
 	public String toString() {
-		return "Kysymys [kysymysId=" + id + ", kysymys=" + question + ", kysely=" + survey + "]";
+		return "Kysymys [tyyppi=" + type + ", kysymysId=" + id + ", kysymys=" + question + ", kysely=" + survey + "]";
 	}
 }
