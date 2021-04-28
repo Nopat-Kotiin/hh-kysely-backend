@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import java.util.List;
 
 import javax.persistence.ElementCollection;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 
@@ -26,7 +26,7 @@ public class Answer {
 	// TODO: määrittele miten vastaus säilötään radio- ja checkbox- kysymyksille
 	private String answer;
 	
-	@JsonBackReference
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "questionId")
 	private Question question;

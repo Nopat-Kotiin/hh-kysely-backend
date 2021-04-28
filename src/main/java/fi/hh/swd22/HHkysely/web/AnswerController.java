@@ -1,5 +1,6 @@
 package fi.hh.swd22.HHkysely.web;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ public class AnswerController {
     @Autowired
     private SurveyRepository surveyRepository;
 
+    // Deprecated
+    // TODO: REMOVE
     @PostMapping(value = "/submit", produces = "application/json", consumes = "application/json")
     public ResponseEntity<String> submitAnswers(@RequestBody Survey survey) {
         HttpStatus status = HttpStatus.OK;
@@ -48,6 +51,29 @@ public class AnswerController {
         }
 
         return new ResponseEntity<>(resp, status);
+    }
+
+    @PostMapping(value = "/surveys/{id}/answers", produces = "application/json", consumes = "application/json")
+    public ResponseEntity<String> submitAnswers(@RequestBody List<Answer> answers, @PathVariable Long id) {
+        Optional<Survey> surveyOpt = surveyRepository.findById(id);
+        if (!surveyOpt.isPresent()) {
+            return new ResponseEntity<>("Invalid survey", HttpStatus.NOT_FOUND);
+        }
+
+        Survey survey = surveyOpt.get();
+        List<Question> questions = survey.getQuestions();
+
+        if(questions.size() != answers.size()) {
+            return new ResponseEntity<>("Error in input data", HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+
+        for (int i = 0; i < questions.size(); i++) {
+            Answer a = answers.get(i);
+            a.setQuestion(questions.get(i));
+            answerRepository.save(a);
+        }
+
+        return new ResponseEntity<>("answers submitted", HttpStatus.OK);
     }
 
     // Palauttaa No Content statuksen, jos kyselyä ei löydy
