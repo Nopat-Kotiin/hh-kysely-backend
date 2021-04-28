@@ -11,7 +11,7 @@ function addField() {
 
     // Create hidden field for type
     let typeInput = document.createElement('input');
-    switch(choice) {
+    switch (choice) {
         case 'text':
             typeInput.value = "text";
             break;
@@ -32,10 +32,10 @@ function addField() {
     remove.id = rowIndex;
     remove.setAttribute("onClick", "removeField(" + rowIndex + ")");
     remove.setAttribute("type", "button");
-    remove.className = "btn btn-danger";
+    remove.className = "btn btn-danger rm-btn";
 
     // Insert new table row to "questions", 2 new empty table data
-    //and append input field and remove button to the newly created data
+    // and append input field and remove button to the newly created data
     let newDiv = document.createElement('div');
     document.getElementById("questions").appendChild(newDiv);
     newDiv.className = "question-div";
@@ -47,7 +47,7 @@ function addField() {
     newDiv.appendChild(wrapper);
 
     // If the question type is not text, add one choice
-    if(choice !== 'text') {
+    if (choice !== 'text') {
         let choiceDiv = document.createElement('div');
 
         let choiceInput = document.createElement('input');
@@ -58,14 +58,14 @@ function addField() {
         let removeChoice = document.createElement('button');
         removeChoice.innerHTML = "-";
         removeChoice.setAttribute("onClick", "removeChoice(" + rowIndex + ", " + 0 + ")");
-        removeChoice.className = "btn btn-danger";
+        removeChoice.className = "btn btn-danger rm-choice-btn";
         removeChoice.setAttribute("type", "button");
         removeChoice.style.marginLeft = '50px';
 
         let addChoice = document.createElement('button');
         addChoice.innerHTML = "+";
         addChoice.setAttribute("onClick", "addChoice(" + rowIndex + ", " + 0 + ")");
-        addChoice.className = "btn btn-success";
+        addChoice.className = "btn btn-success add-choice-btn";
         addChoice.setAttribute("type", "button");
 
         choiceDiv.appendChild(removeChoice);
@@ -76,7 +76,6 @@ function addField() {
     }
 }
 
-// TODO: this function is WIP and everything below is not done
 // Function for removing a field when the minus button is clicked
 function removeField(id) {
 
@@ -88,36 +87,33 @@ function removeField(id) {
         return;
     }
 
-    let toBeRemoved;
     // Iterate through the table rows
     for (var i = 0, row; row = questions[i]; i++) {
 
         let current = parseInt(row.getElementsByTagName('button')[0].id);
-        console.log(current, id);
 
-        //delete the row that called the function
-        if (current === id) {
-            toBeRemoved = current;
-            //parentDiv.removeChild(row.parentNode);
-        }
-
-        if (current >= id) {
-            console.log(row.getElementsByTagName('input'));
-        }
-
-        //arrange the table data back in order
-        /* if (current >= id) {
-            for (var j = 0, element; element = table.rows[i].getElementsByTagName("input")[j]; j++) {
-                let input = table.rows[i].getElementsByTagName("input")[0];
-                input.id = input.id.substr(0, 9) + i + input.id.substr(10);
-                input.name = input.name.substr(0, 10) + i + input.name.substr(11);
+        // subtract 1 from all elements' attributes after deletable question
+        // so that it is parsed correctly on submission
+        if (current > id) {
+            const inputs = row.getElementsByTagName('input');
+            for (var j = 0, input; input = inputs[j]; j++) {
+                input.id = input.id.substr(0, 9) + (i - 1) + input.id.substr(10);
+                input.name = input.name.substr(0, 10) + (i - 1) + input.name.substr(11);
             }
-            let button = table.rows[i].getElementsByTagName("button")[0];
-            button.id = i;
-            button.setAttribute("onClick", "removeField(" + i + ")");
-        } */
+
+            const buttons = row.getElementsByClassName('rm-choice-btn');
+            for (var j = 0, button; button = buttons[j]; j++) {
+                button.setAttribute("onClick", "removeChoice(" + (i - 1) + ", " + j + ")")
+            }
+
+            const rmBtn = row.getElementsByClassName('rm-btn')[0];
+            rmBtn.setAttribute("onClick", "removeField(" + (i - 1) + ")");
+            const addBtn = row.getElementsByClassName('add-choice-btn')[0];
+            if (addBtn) addBtn.setAttribute("onClick", "addChoice(" + (i - 1) + ", " + j + ")");
+        }
     }
-    parentDiv.removeChild(questions[toBeRemoved].parentNode);
+    // delete the element that the function was called from
+    parentDiv.removeChild(questions[id]);
 }
 
 function validateForm() {
@@ -130,13 +126,24 @@ function validateForm() {
     var emptyRows = 0;
     const questions = document.getElementById('questions').getElementsByTagName('input');
     for (var i = 0, row; row = questions[i]; i++) {
-        if (row.value === "") {
+        if (row.value === "" && row.className !== 'choice') {
             emptyRows++;
+        }
+    }
+
+    var emptyChoices = 0;
+    const choices = document.getElementsByClassName('choice');
+    for (var i = 0, row; row = choices[i]; i++) {
+        if (row.value === "") {
+            emptyChoices++;
         }
     }
 
     if (emptyRows > 0) {
         msg += "\n-You have " + emptyRows + " empty questions";
+    }
+    if (emptyChoices > 0) {
+        msg += "\n-You have " + emptyChoices + " empty choices";
     }
     if (msg.length > 0) {
         alert(msg);
@@ -165,6 +172,69 @@ function ResetNew() {
 
 }
 
-function removeChoice(qId, cId) {
-    console.log(qId, cId);
+function removeChoice(questionId, choiceId) {
+    const question = document.getElementsByClassName('question-div')[questionId];
+    const choices = question.getElementsByClassName('choice');
+    if (choices.length === 1) {
+        alert("You must have at least one choice in a question");
+        return;
+    }
+
+    for (var i = 0, choice; choice = choices[i]; i++) {
+        if (i >= choiceId) {
+            choice.id = choice.id.substr(0, 18) + (i - 1);
+            choice.name = choice.name.substr(0, 21) + (i - 1) + choice.name.substr(22);
+
+            const buttons = choice.parentNode.getElementsByTagName('button');
+            const rmBtn = buttons[0];
+            rmBtn.setAttribute("onClick", "removeChoice(" + questionId + ", " + (i - 1) + ")")
+            if (buttons.length > 1) {
+                const addBtn = buttons[1];
+                addBtn.setAttribute("onClick", "addChoice(" + questionId + ", " + (i - 1) + ")");
+            }
+        }
+    }
+
+    // move add button in case it would be deleted
+    // could be improved by moving add button elsewhere
+    if (choiceId === (choices.length - 1)) {
+        const last = choices[choices.length - 1].parentNode;
+        const addBtn = last.getElementsByClassName('add-choice-btn')[0];
+        const secondLast = choices[choices.length - 2].parentNode;
+        console.log(secondLast);
+        secondLast.appendChild(addBtn);
+    }
+
+    question.removeChild(choices[choiceId].parentNode);
+}
+
+function addChoice(questionId, choiceId) {
+    const question = document.getElementsByClassName('question-div')[questionId];
+    const oldChoice = question.getElementsByClassName('choice')[choiceId].parentNode;
+    const newChoiceDiv = document.createElement('div');
+
+    let choiceInput = document.createElement('input');
+    choiceInput.id = "questions" + questionId + ".choices" + (choiceId + 1);
+    choiceInput.setAttribute("name", "questions[" + questionId + "].choices[" + (choiceId + 1) + "]");
+    choiceInput.className = "choice";
+
+    let removeChoice = document.createElement('button');
+    removeChoice.innerHTML = "-";
+    removeChoice.setAttribute("onClick", "removeChoice(" + questionId + ", " + (choiceId + 1) + ")");
+    removeChoice.className = "btn btn-danger rm-choice-btn";
+    removeChoice.setAttribute("type", "button");
+    removeChoice.style.marginLeft = '50px';
+
+    let addChoice = document.createElement('button');
+    addChoice.innerHTML = "+";
+    addChoice.setAttribute("onClick", "addChoice(" + questionId + ", " + (choiceId + 1) + ")");
+    addChoice.className = "btn btn-success add-choice-btn";
+    addChoice.setAttribute("type", "button");
+
+    newChoiceDiv.appendChild(removeChoice);
+    newChoiceDiv.appendChild(choiceInput);
+    newChoiceDiv.appendChild(addChoice);
+
+    question.appendChild(newChoiceDiv);
+    oldChoice.removeChild(oldChoice.getElementsByClassName('add-choice-btn')[0]);
 }
