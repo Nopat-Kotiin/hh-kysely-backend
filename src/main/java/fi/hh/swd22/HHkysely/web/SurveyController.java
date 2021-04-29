@@ -45,11 +45,6 @@ public class SurveyController {
     @Autowired
     private QuestionRepository questionRepository;
 
-    @GetMapping("/")
-    public String indexRedirect() {
-        return "redirect:/surveylist";
-    }
-
     // function based on:
     // https://stackoverflow.com/questions/37847549/spring-mvc-form-data-binding-of-a-list-of-abstract-class
     @InitBinder
@@ -103,11 +98,22 @@ public class SurveyController {
         });
     }
 
+    @GetMapping("/")
+    public String indexRedirect() {
+        return "redirect:/surveylist";
+    }
+
+    @GetMapping("/resthome")
+    public String restHome() {
+        return "resthome";
+    }
+
+    // TODO: palauta vain kyselyn nimet?? erillinen surveyResponse olio ehkä
     @GetMapping("/surveys")
     public @ResponseBody List<Survey> getRestSurveys() {
         List<Survey> surveys = (List<Survey>) surveyRepository.findAll();
         for (Survey s : surveys) {
-            s.getQuestions().forEach(q -> q.setAnswers(null));
+            s.setQuestions(null);
         }
         return (List<Survey>) surveyRepository.findAll();
     }

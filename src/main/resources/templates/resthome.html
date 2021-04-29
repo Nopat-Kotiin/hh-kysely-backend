@@ -1,0 +1,187 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Kyselyt</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>REST Home Page</title>
+</head>
+
+<body>
+    <h1>REST Home Page</h1>
+
+    <h2>All Surveys</h2>
+    <p>
+        <strong>Method:</strong> GET <strong>Endpoint:</strong> <strong><a href="/surveys">/surveys</a></strong>
+    </p>
+    <p>
+        <strong>JSON Example:</strong>
+    </p>
+    <pre><code>
+        [
+            {
+                "id": 1,
+                "info": "Tällä kyselyllä selvitetään tuttavien lempiruokia ja juomia, sekä lempivärejä tulevaa juhlaa varten.",
+                "name": "Lempikysely",
+                "questions": null
+            },
+            {
+                "id": 2,
+                "info": "Tämä on testikysely",
+                "name": "Testikysely",
+                "questions": null
+            }
+        ]
+    </code></pre>
+
+    <h2>Survey By Id</h2>
+    <p>
+        <strong>GET </strong><strong> /surveys/{id} </strong> <strong>
+            <a href="/surveys/1">/surveys/1</a></strong>
+    </p>
+    <p>
+        <strong>JSON Example:</strong>
+    </p>
+    <pre><code>
+        {
+            "id": 1,
+            "info": "Tällä kyselyllä selvitetään tuttavien lempiruokia ja juomia, sekä lempivärejä tulevaa juhlaa varten.",
+            "name": "Lempikysely",
+            "questions": [
+                {
+                    "id": 2,
+                    "question": "Mikä on lempiruokasi?",
+                    "type": "text",
+                    "answers": null
+                },
+                {
+                    "id": 3,
+                    "question": "Mikä on lempijuomasi?",
+                    "type": "text",
+                    "answers": null
+                },
+                {
+                    "id": 4,
+                    "question": "Mikä on lempivärisi?",
+                    "type": "radio",
+                    "answers": null,
+                    "choices": [
+                        "Sininen",
+                        "Vihreä",
+                        "Punainen",
+                        "Keltainen"
+                    ]
+                }
+            ]
+        }
+    </code></pre>
+
+    <h2>Survey Answers By Id</h2>
+    <p>
+        <strong>GET </strong><strong> /surveys/{id}/answers </strong> <strong>
+            <a href="/surveys/1/answers">/surveys/1/answers</a></strong>
+    </p>
+    <p>
+        <strong>JSON Example:</strong>
+    </p>
+    <pre><code>
+        {
+            "id": 1,
+            "info": "Tällä kyselyllä selvitetään tuttavien lempiruokia ja juomia, sekä lempivärejä tulevaa juhlaa varten.",
+            "name": "Lempikysely",
+            "questions": [
+                {
+                    "id": 2,
+                    "question": "Mikä on lempiruokasi?",
+                    "type": "text",
+                    "answers": [
+                        {
+                            "selections": [],
+                            "id": 5,
+                            "answer": "Kala"
+                        },
+                        {
+                            "selections": [],
+                            "id": 8,
+                            "answer": "Leipä"
+                        }
+                    ]
+                },
+                {
+                    "id": 3,
+                    "question": "Mikä on lempijuomasi?",
+                    "type": "text",
+                    "answers": [
+                        {
+                            "selections": [],
+                            "id": 6,
+                            "answer": "Maito"
+                        },
+                        {
+                            "selections": [],
+                            "id": 9,
+                            "answer": "Coca cola"
+                        }
+                    ]
+                },
+                {
+                    "id": 4,
+                    "question": "Mikä on lempivärisi?",
+                    "type": "radio",
+                    "answers": [
+                        {
+                            "selections": [
+                                1
+                            ],
+                            "id": 7,
+                            "answer": ""
+                        },
+                        {
+                            "selections": [
+                                3
+                            ],
+                            "id": 10,
+                            "answer": ""
+                        }
+                    ],
+                    "choices": [
+                        "A",
+                        "B",
+                        "C",
+                        "D"
+                    ]
+                }
+            ]
+        }
+    </code></pre>
+
+    <h2>Post Survey Answers By Id</h2>
+    <p>
+        <strong>Post </strong><strong> /surveys/{id}/answers </strong> <strong>
+            <a href="/surveys/1/answers">/surveys/1/answers</a></strong>
+    </p>
+    <p>
+        <strong>JSON Example:</strong>
+    </p>
+    <p>
+        Only accepts post requests with answers that fit the given survey
+    </p>
+    <pre><code>
+        [
+            {
+                "answer": "Leipä"
+            },
+            {
+                "answer": "Coca cola"
+            },
+            {
+                "answer": "",
+                "selections": [
+                    3
+                ]
+            }
+        ]
+    </code></pre>
+</body>
+
+</html>
