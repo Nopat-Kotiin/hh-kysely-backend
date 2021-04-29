@@ -186,7 +186,7 @@ public class SurveyController {
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public String deleteSurvey(@PathVariable("id") Long id) {
 		surveyRepository.deleteById(id);
-		return "redirect:../surveys";
+		return "redirect:../surveylist";
 	}
     
 }
