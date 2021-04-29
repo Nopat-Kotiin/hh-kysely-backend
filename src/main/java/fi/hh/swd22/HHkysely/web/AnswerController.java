@@ -77,7 +77,7 @@ public class AnswerController {
     }
 
     // Palauttaa No Content statuksen, jos kyselyä ei löydy
-    @GetMapping("getanswers/{id}")
+    @GetMapping("/surveys/{id}/answers")
     public ResponseEntity<Survey> getSurveyById(@PathVariable("id") Long id) {
         HttpStatus status = HttpStatus.NO_CONTENT;
         Optional<Survey> s = surveyRepository.findById(id);

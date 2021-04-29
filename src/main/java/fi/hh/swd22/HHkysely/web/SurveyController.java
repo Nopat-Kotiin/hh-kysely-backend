@@ -47,7 +47,7 @@ public class SurveyController {
 
     @GetMapping("/")
     public String indexRedirect() {
-        return "redirect:/surveys";
+        return "redirect:/surveylist";
     }
 
     // function based on:
@@ -103,7 +103,7 @@ public class SurveyController {
         });
     }
 
-    @GetMapping("/getsurveys")
+    @GetMapping("/surveys")
     public @ResponseBody List<Survey> getRestSurveys() {
         List<Survey> surveys = (List<Survey>) surveyRepository.findAll();
         for (Survey s : surveys) {
@@ -112,7 +112,7 @@ public class SurveyController {
         return (List<Survey>) surveyRepository.findAll();
     }
     
-    @RequestMapping(value = "/surveys", method = RequestMethod.GET)
+    @RequestMapping(value = "/surveylist", method = RequestMethod.GET)
 	public String getSurveys (Model model) {
 		List<Survey> surveys = (List<Survey>) surveyRepository.findAll();
 		model.addAttribute("surveys", surveys);
@@ -143,7 +143,7 @@ public class SurveyController {
     	return "redirect:/surveys";
     }
     
-    @GetMapping("addsurvey")
+    @GetMapping("/addsurvey")
     public String addSurvey(Model model) {
     	boolean edit = false;
         Survey survey = new Survey("");
@@ -153,7 +153,7 @@ public class SurveyController {
         return "addsurvey";
     }
 
-    @GetMapping("edit/{id}")
+    @GetMapping("/edit/{id}")
     public String editSurvey(@PathVariable("id") Long id, Model model) {
     	boolean edit = true;
         Survey survey = surveyRepository.findById(id).get();
@@ -163,7 +163,7 @@ public class SurveyController {
     }
 
     // Palauttaa No Content statuksen, jos kyselyä ei löydy
-    @GetMapping("survey/{id}")
+    @GetMapping("/surveys/{id}")
     public @ResponseBody ResponseEntity<Survey> getSurveyById(@PathVariable("id") Long id) {
         HttpStatus status = HttpStatus.NO_CONTENT;
         Optional<Survey> s = surveyRepository.findById(id);

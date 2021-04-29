@@ -12,8 +12,9 @@ import java.util.List;
 import javax.persistence.ElementCollection;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+// TODO: mahdollisesti lisää tapa erotella monivalintavastaukset
+// Tällä hetkellä mahdollista tarkistaa kysymyksestä onko vastaus monivalinta
 @Entity
-
 public class Answer {
 	
 	@ElementCollection
@@ -23,7 +24,6 @@ public class Answer {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
-	// TODO: määrittele miten vastaus säilötään radio- ja checkbox- kysymyksille
 	private String answer;
 	
 	@JsonIgnore
@@ -74,6 +74,4 @@ public class Answer {
 		this.selections = selections;
 	}	
 	
-	
-
 }

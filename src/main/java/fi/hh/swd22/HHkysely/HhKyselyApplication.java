@@ -39,5 +39,4 @@ public class HhKyselyApplication {
 			questionRepository.save(q3);
 		};
 	}
-
 }
