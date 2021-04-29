@@ -146,7 +146,7 @@ public class SurveyController {
                 questionRepository.delete(q);
             }
         }
-    	return "redirect:/surveys";
+    	return "redirect:/surveylist";
     }
     
     @GetMapping("/addsurvey")
