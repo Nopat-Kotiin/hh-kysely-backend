@@ -29,30 +29,6 @@ public class AnswerController {
     @Autowired
     private SurveyRepository surveyRepository;
 
-    // Deprecated
-    // TODO: REMOVE
-    @PostMapping(value = "/submit", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<String> submitAnswers(@RequestBody Survey survey) {
-        HttpStatus status = HttpStatus.OK;
-        String resp = "answers submitted";
-
-        // Jos vastaavaa kyselyä ei ole tai kysymyslistojen määrät ovat eri, palautetaan virhe
-        // TODO: change teapot to a more suitable response
-        if (!surveyRepository.findById(survey.getId()).isPresent() ||
-            (survey.getQuestions().size() != surveyRepository.findById(survey.getId()).get().getQuestions().size())) {
-            status = HttpStatus.I_AM_A_TEAPOT;
-            resp = "I'm a teapot";
-        } else {
-            for (Question q : survey.getQuestions()) {
-                for (Answer a : q.getAnswers()) {
-                    answerRepository.save(a);
-                }
-            }
-        }
-
-        return new ResponseEntity<>(resp, status);
-    }
-
     @PostMapping(value = "/surveys/{id}/answers", produces = "application/json", consumes = "application/json")
     public ResponseEntity<String> submitAnswers(@RequestBody List<Answer> answers, @PathVariable Long id) {
         Optional<Survey> surveyOpt = surveyRepository.findById(id);
