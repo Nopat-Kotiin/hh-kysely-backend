@@ -153,7 +153,6 @@ public class SurveyController {
     public String addSurvey(Model model) {
     	boolean edit = false;
         Survey survey = new Survey("");
-        survey.getQuestions().add(new TextQuestion());
         model.addAttribute("survey", survey);
         model.addAttribute("edit", edit);
         return "addsurvey";

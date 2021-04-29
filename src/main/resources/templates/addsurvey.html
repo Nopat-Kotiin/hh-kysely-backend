@@ -24,6 +24,7 @@
         <h4>Kysymykset</h4>
         <div id="questions">
             <th:block th:each="_, stat : *{questions}">
+            
                 <div class="question-div" th:if="*{questions[__${stat.index}__].type == 'text'}">
                     <div>
                         <input type="text" th:field="*{questions[__${stat.index}__].question}" />
