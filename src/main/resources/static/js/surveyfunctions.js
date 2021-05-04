@@ -86,11 +86,6 @@ function removeField(id) {
     let parentDiv = document.getElementById('questions');
     let questions = document.getElementsByClassName('question-div');
 
-    if (questions.length === 1) {
-        alert("You must have at least one question");
-        return;
-    }
-
     // Iterate through the table rows
     for (var i = 0, row; row = questions[i]; i++) {
 
