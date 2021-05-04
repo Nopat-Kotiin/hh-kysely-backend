@@ -26,6 +26,7 @@
             <th:block th:each="_, stat : *{questions}">
             
                 <div class="question-div" th:if="*{questions[__${stat.index}__].type == 'text'}">
+                    <h5 th:text="*{questions[__${stat.index}__].type}"></h5>
                     <div>
                         <input type="text" th:field="*{questions[__${stat.index}__].question}" />
                         <input type="hidden" th:field="*{questions[__${stat.index}__].id}" />
@@ -36,6 +37,7 @@
                 </div>
 
                 <div class="question-div" th:unless="*{questions[__${stat.index}__].type == 'text'}">
+                    <h5 th:text="*{questions[__${stat.index}__].type}"></h5>
                     <div>
                         <input type="text" th:field="*{questions[__${stat.index}__].question}" />
                         <input type="hidden" th:field="*{questions[__${stat.index}__].id}" />

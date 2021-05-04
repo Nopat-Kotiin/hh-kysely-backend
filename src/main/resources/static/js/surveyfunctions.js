@@ -40,7 +40,12 @@ function addField() {
     document.getElementById("questions").appendChild(newDiv);
     newDiv.className = "question-div";
 
+    // Create h5 element to show which question type is added
+    let header = document.createElement('h5');
+    header.innerText = typeInput.value;
+
     let wrapper = document.createElement('div');
+    wrapper.appendChild(header);
     wrapper.appendChild(input);
     wrapper.appendChild(typeInput);
     wrapper.appendChild(remove);
