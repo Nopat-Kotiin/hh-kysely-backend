@@ -1,6 +1,6 @@
 function addField() {
 
-    let choice = document.getElementById('choices').value;
+    let choice = document.getElementById('choices').value.split(" ")[0];
 
     // Create an empty input field element
     let rowIndex = document.getElementById('questions').getElementsByClassName('question-div').length;
@@ -40,12 +40,7 @@ function addField() {
     document.getElementById("questions").appendChild(newDiv);
     newDiv.className = "question-div";
 
-    // Create h5 element to show which question type is added
-    let header = document.createElement('h5');
-    header.innerText = typeInput.value;
-
     let wrapper = document.createElement('div');
-    wrapper.appendChild(header);
     wrapper.appendChild(input);
     wrapper.appendChild(typeInput);
     wrapper.appendChild(remove);
