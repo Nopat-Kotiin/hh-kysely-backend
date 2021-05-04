@@ -129,6 +129,7 @@ function validateForm() {
 
     var emptyRows = 0;
     const questions = document.getElementById('questions').getElementsByTagName('input');
+    if (questions.length === 0) msg += "\n- Survey must have at least 1 question";
     for (var i = 0, row; row = questions[i]; i++) {
         if (row.value === "" && row.className !== 'choice') {
             emptyRows++;
