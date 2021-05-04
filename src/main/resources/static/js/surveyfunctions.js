@@ -40,7 +40,11 @@ function addField() {
     document.getElementById("questions").appendChild(newDiv);
     newDiv.className = "question-div";
 
+    let header = document.createElement('h5');
+    header.innerText = typeInput.value;
+
     let wrapper = document.createElement('div');
+    wrapper.appendChild(header);
     wrapper.appendChild(input);
     wrapper.appendChild(typeInput);
     wrapper.appendChild(remove);
