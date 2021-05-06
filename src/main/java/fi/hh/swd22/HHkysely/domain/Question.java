@@ -34,6 +34,7 @@ public abstract class Question {
 
 	public Question() {}
 	
+	// TODO: type mahdollisesti turha konstruktorissa
 	public Question(String type, String question, Survey survey) {
 		super();
 		this.question = question;
