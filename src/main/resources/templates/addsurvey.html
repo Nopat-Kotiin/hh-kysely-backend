@@ -27,7 +27,7 @@
             <th:block th:each="_, stat : *{questions}">
             
                 <div class="question-div" th:if="*{questions[__${stat.index}__].type == 'text'}">
-                    <h5 th:text="*{questions[__${stat.index}__].type}"></h5>
+                    <h5>Tekstikysymys</h5>
                     <div>
                         <input type="text" th:field="*{questions[__${stat.index}__].question}" />
                         <input type="hidden" th:field="*{questions[__${stat.index}__].id}" />
@@ -38,7 +38,8 @@
                 </div>
 
                 <div class="question-div" th:unless="*{questions[__${stat.index}__].type == 'text'}">
-                    <h5 th:text="*{questions[__${stat.index}__].type}"></h5>
+                    <h5 th:if="*{questions[__${stat.index}__].type == 'radio'}">Monivalinta (valitse yksi)</h5>
+                    <h5 th:if="*{questions[__${stat.index}__].type == 'checkbox'}">Monivalinta (valitse monta)</h5>
                     <div>
                         <input type="text" th:field="*{questions[__${stat.index}__].question}" />
                         <input type="hidden" th:field="*{questions[__${stat.index}__].id}" />
@@ -60,9 +61,9 @@
         </div>
         <button type="button" class="btn btn-success" onClick="addField()">lisää kysymys</button>
         <select id="choices">
-            <option>text &#xf031;</option>
-            <option>radiobutton &#xf111;</option>
-            <option>checkbox &#xf0c8;</option>
+            <option value="text">Tekstikysymys &#xf031;</option>
+            <option value="radio">Monivalinta (yksittäinen) &#xf111;</option>
+            <option value="checkbox">Monivalinta (monta) &#xf0c8;</option>
         </select>
         <br>
         <br>

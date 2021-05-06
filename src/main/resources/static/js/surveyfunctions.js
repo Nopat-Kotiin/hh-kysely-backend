@@ -1,5 +1,4 @@
 function addField() {
-
     let choice = document.getElementById('choices').value.split(" ")[0];
 
     // Create an empty input field element
@@ -11,17 +10,7 @@ function addField() {
 
     // Create hidden field for type
     let typeInput = document.createElement('input');
-    switch (choice) {
-        case 'text':
-            typeInput.value = "text";
-            break;
-        case 'radiobutton':
-            typeInput.value = "radio";
-            break;
-        case 'checkbox':
-            typeInput.value = "checkbox";
-            break;
-    }
+    typeInput.value = choice;
     typeInput.type = "hidden";
     typeInput.id = "questions" + rowIndex + ".type";
     typeInput.setAttribute("name", "questions[" + rowIndex + "].type");
@@ -41,12 +30,23 @@ function addField() {
     newDiv.className = "question-div";
 
     let header = document.createElement('h5');
-    header.innerText = typeInput.value;
+    switch (choice) {
+        case 'text':
+            header.innerText = 'Tekstikysymys';
+            break;
+        case 'radio':
+            header.innerText = 'Monivalinta (valitse yksi)';
+            break;
+        case 'checkbox':
+            header.innerText = 'Monivalinta (valitse monta)';
+            break;
+    }
 
     let wrapper = document.createElement('div');
     wrapper.appendChild(header);
     wrapper.appendChild(input);
     wrapper.appendChild(typeInput);
+    wrapper.innerHTML += ' ';
     wrapper.appendChild(remove);
     newDiv.appendChild(wrapper);
 
@@ -73,7 +73,9 @@ function addField() {
         addChoice.setAttribute("type", "button");
 
         choiceDiv.appendChild(removeChoice);
+        choiceDiv.innerHTML += ' ';
         choiceDiv.appendChild(choiceInput);
+        choiceDiv.innerHTML += ' ';
         choiceDiv.appendChild(addChoice);
         newDiv.appendChild(choiceDiv);
 
@@ -201,7 +203,7 @@ function removeChoice(questionId, choiceId) {
         const last = choices[choices.length - 1].parentNode;
         const addBtn = last.getElementsByClassName('add-choice-btn')[0];
         const secondLast = choices[choices.length - 2].parentNode;
-        console.log(secondLast);
+        secondLast.innerHTML += ' ';
         secondLast.appendChild(addBtn);
     }
 
@@ -232,7 +234,9 @@ function addChoice(questionId, choiceId) {
     addChoice.setAttribute("type", "button");
 
     newChoiceDiv.appendChild(removeChoice);
+    newChoiceDiv.innerHTML += ' ';
     newChoiceDiv.appendChild(choiceInput);
+    newChoiceDiv.innerHTML += ' ';
     newChoiceDiv.appendChild(addChoice);
 
     question.appendChild(newChoiceDiv);
