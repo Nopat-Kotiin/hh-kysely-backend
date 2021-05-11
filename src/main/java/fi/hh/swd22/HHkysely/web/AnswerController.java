@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -73,15 +74,16 @@ public class AnswerController {
 
     @GetMapping("/surveystatistics/{id}")
     public List<AnswerStatistics> getStatistics(@PathVariable("id") Long id) {
+        // Queryjen tekeminen element collectionien kanssa vaikutti paljon haastavammalta
+        // tähän verrattuna, joten haetaan itse vain tiedot ja laitetaan listaan
+        // AnswerStatistics-olioita
+        
         List<AnswerStatistics> statList = new ArrayList<>();
         Survey s = surveyRepository.findById(id).get();
-
         for (Question q : s.getQuestions()) {
             Long qId = q.getId();
             if (q.getType().equals("text")) {
-                q.getAnswers().forEach(answer ->  {
-                    statList.add(new AnswerStatisticsText(qId, answer.getAnswer()));
-                });
+                statList.add(new AnswerStatisticsText(qId, q.getAnswers().stream().map(answer -> answer.getAnswer()).collect(Collectors.toList())));
             } else {
                 Map<Integer, Integer> answers = new HashMap<>();
                 for (Answer a : q.getAnswers()) {

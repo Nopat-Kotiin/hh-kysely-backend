@@ -1,19 +1,21 @@
 package fi.hh.swd22.HHkysely.domain;
 
+import java.util.List;
+
 public class AnswerStatisticsText extends AnswerStatistics {
-    private String answer;
+    private List<String> answers;
 
-    public AnswerStatisticsText(Long id, String answer) {
+    public AnswerStatisticsText(Long id, List<String> answers) {
         super(id);
-        this.answer = answer;
+        this.answers = answers;
     }
 
-    public String getAnswer() {
-        return answer;
+    public List<String> getAnswers() {
+        return answers;
     }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
+    public void setAnswers(List<String> answers) {
+        this.answers = answers;
     }
     
 }
