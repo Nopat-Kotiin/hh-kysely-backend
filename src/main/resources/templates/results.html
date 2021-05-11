@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th = "http://www.thymeleaf.org">
+
+<head>
+
+<title>Survey Preview</title>
+<meta http-equiv = "Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+
+<div style="text-align:center">
+
+<h2 style="height:60px;">Survey Preview</h2>
+
+<form th:object="${survey}" th:action="@{../save}" action="#" method="post">
+
+<input type="hidden" th:field="*{id}" class="form-control"/>
+
+<div class="form-group">
+	<label for="name">Name:</label>
+	<input type="text" class="col-sm-8 control-label" size="50" th:field="*{name}" readonly="readonly"/>
+	<div style="clear: both; display:block; height:10px;"></div>
+</div>
+
+<div class="form-group">
+	<label for="info">Info:</label>
+	<input type="text" class="col-sm-8 control-label" size="50" th:field="*{info}" readonly="readonly"/>
+	<div style="clear: both; display:block; height:10px;"></div>
+</div>
+
+
+<input type="submit" value="Kyselyt"/></input>
+</form>
+
+</div>
+</body>
+</html>

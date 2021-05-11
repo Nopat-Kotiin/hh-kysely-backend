@@ -182,6 +182,19 @@ public class SurveyController {
         return new ResponseEntity<>(survey, status);
     }
     
+    
+    @RequestMapping(value = "/results/{id}")
+	public String showResults(@PathVariable("id") Long id, Model model) {
+	
+    	model.addAttribute("survey", surveyRepository.findById(id));
+		model.addAttribute("questions", questionRepository.findAll());
+		
+		return "results";
+		
+		
+	}
+    
+    
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public String deleteSurvey(@PathVariable("id") Long id) {
 		surveyRepository.deleteById(id);
