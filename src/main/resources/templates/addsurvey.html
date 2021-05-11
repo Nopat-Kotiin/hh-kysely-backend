@@ -29,7 +29,7 @@
                 <div class="question-div" th:if="*{questions[__${stat.index}__].type == 'text'}">
                     <h5>Tekstikysymys</h5>
                     <div>
-                        <input type="text" th:field="*{questions[__${stat.index}__].question}" />
+                        <input type="text" style="width: 400px;" th:field="*{questions[__${stat.index}__].question}" />
                         <input type="hidden" th:field="*{questions[__${stat.index}__].id}" />
                         <input type="hidden" th:field="*{questions[__${stat.index}__].type}" />
                         <button type="button" class="btn btn-danger rm-btn" th:id="${stat.index}"
@@ -41,7 +41,7 @@
                     <h5 th:if="*{questions[__${stat.index}__].type == 'radio'}">Monivalinta (valitse yksi)</h5>
                     <h5 th:if="*{questions[__${stat.index}__].type == 'checkbox'}">Monivalinta (valitse monta)</h5>
                     <div>
-                        <input type="text" th:field="*{questions[__${stat.index}__].question}" />
+                        <input type="text" style="width: 400px;" th:field="*{questions[__${stat.index}__].question}" />
                         <input type="hidden" th:field="*{questions[__${stat.index}__].id}" />
                         <input type="hidden" th:field="*{questions[__${stat.index}__].type}" />
                         <button type="button" class="btn btn-danger rm-btn" th:id="${stat.index}"
@@ -50,8 +50,8 @@
                     <div th:each="_, cStat : *{questions[__${stat.index}__].choices}">
                         <button style="margin-left: 50px" type="button" class="btn btn-danger rm-choice-btn"
                             th:attr="onclick=|removeChoice(${stat.index}, ${cStat.index})|">-</button>
-                        <input class="choice"
-                            th:field="*{questions[__${stat.index}__].choices[__${cStat.index}__]}"></input>
+                        <input class="choice" 
+                             th:field="*{questions[__${stat.index}__].choices[__${cStat.index}__]}"></input>
                         <button th:if="${cStat.last}" type="button" class="btn btn-success add-choice-btn"
                             th:attr="onclick=|addChoice(${stat.index}, ${cStat.index})|">+</button>
                     </div>

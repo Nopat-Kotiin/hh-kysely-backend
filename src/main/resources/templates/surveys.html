@@ -4,14 +4,23 @@
 <title>Kyselyt</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
+<link rel="stylesheet" href="/css/surveys.css">
 </head>
 <body>
+<section>
 <h1>Kyselyt</h1>
-	<table class="table table-striped">
+	<div class="tbl-header">
+    <table>
+    <thead>
 		<tr>
 			<th>Nimi</th>
 		</tr>
-
+	</thead>
+	</table>
+	</div>
+	<div class="tbl-content">
+    <table>
+      <tbody>
 		<tr th:each="survey : ${surveys}">
 			<td th:text="${survey.name}">Nimi</td>
 			<td>
@@ -20,9 +29,13 @@
 			</td>
 			
 		</tr>
-	</table>
+	 </tbody>
+    </table>
+  </div>
+  </section>
+  <div class="add-button">
 	<a href="/addsurvey"><button class="btn btn-success">Lisää kysely </button></a>
-	
+	</div>
 
 </body>
 </html>
