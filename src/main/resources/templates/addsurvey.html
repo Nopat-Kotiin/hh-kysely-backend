@@ -7,6 +7,7 @@
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/add_survey.css">
+    <link rel="stylesheet" href="/css/surveylist.css">
     <script type="text/javascript" src="/js/surveyfunctions.js"></script>
 </head>
 
@@ -18,8 +19,6 @@
         <h4>Kyselyn nimi:</h4>
         <input type="text" id="sname" th:field="${survey.name}" />
         <input type="hidden" th:field="${survey.id}" />
-        <input type="submit" value="Submit" class="btn btn-success" />
-        <input th:if="${edit == false}" type="button" value="Reset" class="btn btn-danger" onClick="ResetNew()" />
         <h4>Kuvaus:</h4>
         <textarea rows="3" cols="40" id="sdescription" th:field="${survey.info}"></textarea>
         <h4>Kysymykset</h4>
@@ -29,7 +28,7 @@
                 <div class="question-div" th:if="*{questions[__${stat.index}__].type == 'text'}">
                     <h5>Tekstikysymys</h5>
                     <div>
-                        <input type="text" style="width: 400px;" th:field="*{questions[__${stat.index}__].question}" />
+                        <input type="text" style="width: 325px;" th:field="*{questions[__${stat.index}__].question}" />
                         <input type="hidden" th:field="*{questions[__${stat.index}__].id}" />
                         <input type="hidden" th:field="*{questions[__${stat.index}__].type}" />
                         <button type="button" class="btn btn-danger rm-btn" th:id="${stat.index}"
@@ -41,7 +40,7 @@
                     <h5 th:if="*{questions[__${stat.index}__].type == 'radio'}">Monivalinta (valitse yksi)</h5>
                     <h5 th:if="*{questions[__${stat.index}__].type == 'checkbox'}">Monivalinta (valitse monta)</h5>
                     <div>
-                        <input type="text" style="width: 400px;" th:field="*{questions[__${stat.index}__].question}" />
+                        <input type="text" style="width: 325px;" th:field="*{questions[__${stat.index}__].question}" />
                         <input type="hidden" th:field="*{questions[__${stat.index}__].id}" />
                         <input type="hidden" th:field="*{questions[__${stat.index}__].type}" />
                         <button type="button" class="btn btn-danger rm-btn" th:id="${stat.index}"
@@ -68,7 +67,10 @@
         <br>
         <br>
     </form>
-
+    <input type="submit" value="Submit" class="btn btn-success" />
+    <input th:if="${edit == false}" type="button" value="Reset" class="btn btn-danger" onClick="ResetNew()" />
+		<br>
+        <br>
     <a href="/surveylist"><button class="btn btn-success">Kyselyt</button></a>
 </body>
 

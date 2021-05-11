@@ -7,7 +7,7 @@ function addField() {
     input.id = "questions" + rowIndex + ".question";
     input.setAttribute("name", "questions[" + rowIndex + "].question");
     input.setAttribute("type", "text");
-	input.style.width= '400px';
+	input.style.width= '325px';
 	
     // Create hidden field for type
     let typeInput = document.createElement('input');

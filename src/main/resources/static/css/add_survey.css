@@ -7,9 +7,46 @@ body{
   color:#A7A1AE;
   background-color:#1F2739;
   font-family: 'Roboto', sans-serif;
+  text-align: center;
 }
 h4, h1, h5{
 	color: #fff;
 }
 
+.btn {
+ 
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+}
+
+.question-div {
+	background-color: #555555;
+	outline-color: black;
+	outline-width: 2px;
+	outline-style: solid;
+	width: 400px;
+	padding: 10px;
+	margin-bottom: 5px;
+	position: relative;
+}
+
+body {
+	width: 400px;
+	margin: auto;
+}
+
+textarea#sdescription {
+	width: 100%;
+}
+
+.rm-btn {
+	position: absolute;
+	right: 5px;
+	top: 5px;
+}
 
