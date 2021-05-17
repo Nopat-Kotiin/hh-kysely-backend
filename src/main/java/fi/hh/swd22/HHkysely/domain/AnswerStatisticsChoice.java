@@ -1,30 +1,21 @@
 package fi.hh.swd22.HHkysely.domain;
 
+import java.util.Map;
+
 public class AnswerStatisticsChoice extends AnswerStatistics {
 
-    private int choice;
-    private long amount;
+    private Map<Integer, Integer> selections;
 
-    public AnswerStatisticsChoice(long id, int choice, long amount) {
-        super(id);
-        this.choice = choice;
-        this.amount = amount;
+    public AnswerStatisticsChoice(long id, String question) {
+        super(id, question);
     }
 
-    public long getAmount() {
-        return amount;
+    public Map<Integer, Integer> getSelections() {
+        return selections;
     }
 
-    public void setAmount(long amount) {
-        this.amount = amount;
-    }
-
-    public int getChoice() {
-        return choice;
-    }
-
-    public void setChoice(int choice) {
-        this.choice = choice;
+    public void setSelections(Map<Integer, Integer> selections) {
+        this.selections = selections;
     }
 
 }

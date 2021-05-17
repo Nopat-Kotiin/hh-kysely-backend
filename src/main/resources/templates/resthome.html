@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Kyselyt</title>
+    <title>REST Home Page</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>REST Home Page</title>
 </head>
@@ -182,6 +182,55 @@
             }
         ]
     </code></pre>
+
+    <h2>Get survey statistics</h2>
+    <p>
+        <strong>Get </strong><strong> /surveystatistics/{id} </strong> <strong>
+            <a href="/surveystatistics/{1}">/surveystatistics/1</a></strong>
+    </p>
+    <p>
+        <strong>JSON Example:</strong>
+    </p>
+    <pre><code>
+        [
+            {
+                "questionId": 2,
+                "question": "Mikä on lempiruokasi?",
+                "answers": [
+                    "Leipä",
+                    "Kala",
+                    "Hampurilainen"
+                ]
+            },
+            {
+                "questionId": 3,
+                "question": "Mikä on lempijuomasi?",
+                "answers": [
+                    "Maito",
+                    "Vesi",
+                    "Kokis"
+                ]
+            },
+            {
+                "questionId": 4,
+                "question": "Mikä on lempivärisi?",
+                "selections": {
+                    "0": 2,
+                    "2": 1
+                }
+            },
+            {
+                "questionId": 5,
+                "question": "Erikoisruokavaliotarpeet?",
+                "selections": {
+                    "1": 1,
+                    "2": 2,
+                    "3": 1
+                }
+            }
+        ]
+    </code></pre>
+
 </body>
 
 </html>

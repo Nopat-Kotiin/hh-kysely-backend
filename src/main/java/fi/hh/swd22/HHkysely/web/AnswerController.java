@@ -83,7 +83,7 @@ public class AnswerController {
         for (Question q : s.getQuestions()) {
             Long qId = q.getId();
             if (q.getType().equals("text")) {
-                statList.add(new AnswerStatisticsText(qId, q.getAnswers().stream().map(answer -> answer.getAnswer()).collect(Collectors.toList())));
+                statList.add(new AnswerStatisticsText(qId, q.getQuestion(), q.getAnswers().stream().map(answer -> answer.getAnswer()).collect(Collectors.toList())));
             } else {
                 Map<Integer, Integer> answers = new HashMap<>();
                 for (Answer a : q.getAnswers()) {
@@ -93,10 +93,17 @@ public class AnswerController {
                         }
                     }
                 }
+                AnswerStatisticsChoice asc = new AnswerStatisticsChoice(qId, q.getQuestion());
+                asc.setSelections(answers);
+                statList.add(asc);
 
-                for (int key : answers.keySet()) {
-                    statList.add(new AnswerStatisticsChoice(qId, key, answers.get(key)));
-                }
+                /* for (int key : answers.keySet()) {
+                    AnswerStatisticsChoice asc = new AnswerStatisticsChoice(qId, q.getQuestion(), key, answers.get(key));
+                    Map<Integer, Integer> testi = new HashMap<>();
+                    testi.put(1,2);
+                    asc.setSelections(testi);
+                    statList.add(asc);
+                } */
             }
         }
         return statList;
