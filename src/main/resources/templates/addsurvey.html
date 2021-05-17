@@ -4,10 +4,7 @@
 <head>
     <title>Lisää kysely</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/add_survey.css">
-    <link rel="stylesheet" href="/css/surveylist.css">
     <script type="text/javascript" src="/js/surveyfunctions.js"></script>
 </head>
 
@@ -59,11 +56,14 @@
 
         </div>
         <button type="button" class="btn btn-success" onClick="addField()">lisää kysymys</button>
-        <select id="choices">
-            <option value="text">Tekstikysymys &#xf031;</option>
-            <option value="radio">Monivalinta (yksittäinen) &#xf111;</option>
-            <option value="checkbox">Monivalinta (monta) &#xf0c8;</option>
-        </select>
+        <div class="select">
+            <select id="choices">
+                <option value="text">Tekstikysymys &#xf031;</option>
+                <option value="radio">Monivalinta (yksittäinen) &#xf111;</option>
+                <option value="checkbox">Monivalinta (monta) &#xf0c8;</option>
+            </select>
+            <div class="select_arrow"></div>
+        </div>
         <br>
         <br>
         <input type="submit" value="Submit" class="btn btn-success" />

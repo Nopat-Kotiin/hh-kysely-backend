@@ -13,20 +13,9 @@ h4, h1, h5{
 	color: #fff;
 }
 
-.btn {
- 
-  border: none;
-  color: white;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-}
-
 .question-div {
 	background-color: #555555;
-	outline-color: black;
+	outline-color: #464646;
 	outline-width: 2px;
 	outline-style: solid;
 	width: 400px;
@@ -56,3 +45,98 @@ textarea#sdescription {
 	top: 5px;
 }
 
+.btn {
+	border: none;
+  	margin: 4px 2px;
+	box-shadow:inset 0px -3px 7px 0px #444b4f;
+	background:linear-gradient(to bottom, #327da8 5%, #1f3d57 100%);
+	background-color:#327da8;
+	border-radius:3px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	padding:9px 23px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #263666;
+}
+.btn:hover {
+	background:linear-gradient(to bottom, #1f3d57 5%, #327da8 100%);
+	background-color:#1f3d57;
+}
+.btn:active {
+	top:1px;
+}
+
+.btn.btn-danger {
+	box-shadow:inset 0px -3px 7px 0px #444b4f;
+	background:linear-gradient(to bottom, #a63131 5%, #571f1f 100%);
+	background-color:#a63131;
+	border-radius:3px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	padding:9px 23px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #662727;
+}
+.btn.btn-danger:hover {
+	background:linear-gradient(to bottom, #571f1f 5%, #a63131 100%);
+	background-color:#571f1f;
+}
+.btn.btn-danger:active {
+	top:1px;
+}
+
+.select {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 15px;
+    width: 63%;
+}    
+.select select {
+	display: inline-block;
+	width: 100%;
+	cursor: pointer;
+	padding: 10px 15px;
+	outline: 0;
+	border: 1px solid #545454;
+	border-radius: 0px;
+	background: #e6e6e6;
+	color: #7b7b7b;
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+}
+
+.select select::-ms-expand {
+	display: none;
+}
+.select select:hover,
+.select select:focus {
+	color: #000000;
+	background: #cccccc;
+}
+.select select:disabled {
+	opacity: 0.5;
+	pointer-events: none;
+}
+.select_arrow {
+	position: absolute;
+	top: 16px;
+	right: 15px;
+	pointer-events: none;
+	border-style: solid;
+	border-width: 8px 5px 0px 5px;
+	border-color: #7b7b7b transparent transparent transparent;
+}
+.select select:hover ~ .select_arrow,
+.select select:focus ~ .select_arrow {
+	border-top-color: #000000;
+}
+.select select:disabled ~ .select_arrow {
+	border-top-color: #cccccc;
+}
