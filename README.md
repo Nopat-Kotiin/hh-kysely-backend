@@ -4,12 +4,12 @@ Projektissa toteutetaan sprinteissä kyselypalvelu, jossa on mahdollista luoda j
 
 ## Käsitekaavio
 
-![käsitekaavio](http://url/to/img.png)
+![käsitekaavio](docs/Käsitekaavio.png)
 
 ## Javakaavio
 
-![javakaavio](http://url/to/img.png)
+![javakaavio](docs/Javakaavio.png)
 
 ## Tietokantakaavio
 
-![tietokantakaavio](http://url/to/img.png)
+![tietokantakaavio](docs/Tietokantakaavio.png)
