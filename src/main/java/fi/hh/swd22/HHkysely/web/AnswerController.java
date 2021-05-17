@@ -73,14 +73,18 @@ public class AnswerController {
     }
 
     @GetMapping("/surveystatistics/{id}")
-    public List<AnswerStatistics> getStatistics(@PathVariable("id") Long id) {
+    public ResponseEntity<List<AnswerStatistics>> getStatistics(@PathVariable("id") Long id) {
         // Queryjen tekeminen element collectionien kanssa vaikutti paljon haastavammalta
         // tähän verrattuna, joten haetaan itse vain tiedot ja laitetaan listaan
         // AnswerStatistics-olioita
         
         List<AnswerStatistics> statList = new ArrayList<>();
-        Survey s = surveyRepository.findById(id).get();
-        for (Question q : s.getQuestions()) {
+        Optional<Survey> s = surveyRepository.findById(id);
+        if (!s.isPresent()) {
+            return new ResponseEntity<>(new ArrayList<>(), HttpStatus.NOT_FOUND);
+        }
+        Survey survey = s.get();
+        for (Question q : survey.getQuestions()) {
             Long qId = q.getId();
             if (q.getType().equals("text")) {
                 statList.add(new AnswerStatisticsText(qId, q.getQuestion(), q.getAnswers().stream().map(answer -> answer.getAnswer()).collect(Collectors.toList())));
@@ -96,16 +100,8 @@ public class AnswerController {
                 AnswerStatisticsChoice asc = new AnswerStatisticsChoice(qId, q.getQuestion());
                 asc.setSelections(answers);
                 statList.add(asc);
-
-                /* for (int key : answers.keySet()) {
-                    AnswerStatisticsChoice asc = new AnswerStatisticsChoice(qId, q.getQuestion(), key, answers.get(key));
-                    Map<Integer, Integer> testi = new HashMap<>();
-                    testi.put(1,2);
-                    asc.setSelections(testi);
-                    statList.add(asc);
-                } */
             }
         }
-        return statList;
+        return new ResponseEntity<>(statList, HttpStatus.OK);
     }
 }
