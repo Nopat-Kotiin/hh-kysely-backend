@@ -1,48 +1,48 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<title>Kyselyt</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
-<link rel="stylesheet" href="/css/surveys.css">
+	<title>Kyselyt</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
+	<link rel="stylesheet" href="/css/surveys.css">
 </head>
+
 <body>
-<section>
-<h1>Kyselyt</h1>
-	<div class="tbl-header">
-    <table>
-    <thead>
-		<tr>
-			<th>Nimi</th>
-		</tr>
-	</thead>
-	</table>
+	<section>
+		<h1>Kyselyt</h1>
+		<div class="tbl-header">
+			<table>
+				<thead>
+					<tr>
+						<th>Nimi</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<div class="tbl-content">
+			<table>
+				<tbody>
+					<tr th:each="survey : ${surveys}">
+						<td th:text="${survey.name}">Nimi</td>
+						<td>
+							<a th:href="@{/edit/{id}(id=${survey.id})}"><button
+									class="btn btn-success">edit</button></a>
+							<a th:href="@{/delete/{id}(id=${survey.id})}"><button
+									class="btn btn-danger">delete</button></a>
+							<a th:href="@{/results/{id}(id=${survey.id})}"><button
+									class="btn btn-success">preview</button></a>
+						</td>
+
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</section>
+	<div class="add-button">
+		<a href="/addsurvey"><button class="btn btn-success">Lisää kysely </button></a>
 	</div>
-	<div class="tbl-content">
-    <table>
-      <tbody>
-		<tr th:each="survey : ${surveys}">
-			<td th:text="${survey.name}">Nimi</td>
-			<td>
-				<a th:href="@{/edit/{id}(id=${survey.id})}"><button class="btn btn-success">edit</button></a>
-				<a th:href="@{/delete/{id}(id=${survey.id})}"><button class="btn btn-danger">delete</button></a>
-				<a th:href="@{/results/{id}(id=${survey.id})}"><button class="btn btn-success">preview</button></a>
-			</td>
-			
-		</tr>
-	 </tbody>
-    </table>
-  </div>
-  </section>
-  <div class="add-button">
-	<a href="/addsurvey"><button class="btn btn-success">Lisää kysely </button></a>
-<<<<<<< HEAD
-
-
-
-=======
-	</div>
->>>>>>> 10a8e6bbfb9962b030f3cc81845b66e5fdaf349b
 
 </body>
+
 </html>

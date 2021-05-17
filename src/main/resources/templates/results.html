@@ -14,7 +14,7 @@
 
 <h2 style="height:60px;">Survey Preview</h2>
 
-<form th:object="${survey}" th:action="@{../save}" action="#" method="post">
+<form th:object="${survey}" th:action="@{../surveylist}" action="#" method="get">
 
 <input type="hidden" th:field="*{id}" class="form-control"/>
 

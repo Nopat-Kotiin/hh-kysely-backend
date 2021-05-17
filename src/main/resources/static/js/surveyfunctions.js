@@ -3,11 +3,9 @@ function addField() {
 
     // Create an empty input field element
     let rowIndex = document.getElementById('questions').getElementsByClassName('question-div').length;
-    let input = document.createElement('input');
+    let input = document.createElement('textarea');
     input.id = "questions" + rowIndex + ".question";
     input.setAttribute("name", "questions[" + rowIndex + "].question");
-    input.setAttribute("type", "text");
-	input.style.width= '325px';
 	
     // Create hidden field for type
     let typeInput = document.createElement('input');
@@ -98,9 +96,15 @@ function removeField(id) {
         // so that it is parsed correctly on submission
         if (current > id) {
             const inputs = row.getElementsByTagName('input');
-            for (var j = 0, input; input = inputs[j]; j++) {
-                input.id = input.id.substr(0, 9) + (i - 1) + input.id.substr(10);
-                input.name = input.name.substr(0, 10) + (i - 1) + input.name.substr(11);
+            for (var j = 0, area; area = inputs[j]; j++) {
+                area.id = area.id.substr(0, 9) + (i - 1) + area.id.substr(10);
+                area.name = area.name.substr(0, 10) + (i - 1) + area.name.substr(11);
+            }
+
+            const textAreas = row.getElementsByTagName('textarea');
+            for (var j = 0, area; area = textAreas[j]; j++) {
+                area.id = area.id.substr(0, 9) + (i - 1) + area.id.substr(10);
+                area.name = area.name.substr(0, 10) + (i - 1) + area.name.substr(11);
             }
 
             const buttons = row.getElementsByClassName('rm-choice-btn');
@@ -126,10 +130,11 @@ function validateForm() {
     }
 
     var emptyRows = 0;
-    const questions = document.getElementById('questions').getElementsByTagName('input');
+    const questions = document.getElementById('questions').getElementsByClassName('question-div');
     if (questions.length === 0) msg += "\n- Survey must have at least 1 question";
     for (var i = 0, row; row = questions[i]; i++) {
-        if (row.value === "" && row.className !== 'choice') {
+        const area = row.getElementsByTagName('textarea');
+        if (area.value === "") {
             emptyRows++;
         }
     }
@@ -159,8 +164,8 @@ function ResetNew() {
     document.getElementById('questions').innerHTML = "<table id='questions'>" +
         " <tbody><tr>" +
         " <td>" +
-        " <input type='text' id='questions0.question' name='questions[0].question' value=''>" +
-        "    <input type='hidden' id='questions0.id' name='questions[0].id' value='0'>" +
+        " <textarea type='text' id='questions0.question' name='questions[0].question' value=''></textarea>" +
+        "    <input type='hidden' id='questions0.id' name='questions[0].id' value='0' />" +
         "  </td>" +
         " <td>" +
         " <button type='button' class='btn btn-danger' id='0' onclick='removeField(0)'>-</button>" +

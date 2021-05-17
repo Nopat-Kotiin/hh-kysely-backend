@@ -28,7 +28,7 @@
                 <div class="question-div" th:if="*{questions[__${stat.index}__].type == 'text'}">
                     <h5>Tekstikysymys</h5>
                     <div>
-                        <input type="text" style="width: 325px;" th:field="*{questions[__${stat.index}__].question}" />
+                        <textarea th:field="*{questions[__${stat.index}__].question}" ></textarea>
                         <input type="hidden" th:field="*{questions[__${stat.index}__].id}" />
                         <input type="hidden" th:field="*{questions[__${stat.index}__].type}" />
                         <button type="button" class="btn btn-danger rm-btn" th:id="${stat.index}"
@@ -40,7 +40,7 @@
                     <h5 th:if="*{questions[__${stat.index}__].type == 'radio'}">Monivalinta (valitse yksi)</h5>
                     <h5 th:if="*{questions[__${stat.index}__].type == 'checkbox'}">Monivalinta (valitse monta)</h5>
                     <div>
-                        <input type="text" style="width: 325px;" th:field="*{questions[__${stat.index}__].question}" />
+                        <textarea th:field="*{questions[__${stat.index}__].question}" ></textarea>
                         <input type="hidden" th:field="*{questions[__${stat.index}__].id}" />
                         <input type="hidden" th:field="*{questions[__${stat.index}__].type}" />
                         <button type="button" class="btn btn-danger rm-btn" th:id="${stat.index}"
@@ -66,8 +66,8 @@
         </select>
         <br>
         <br>
+        <input type="submit" value="Submit" class="btn btn-success" />
     </form>
-    <input type="submit" value="Submit" class="btn btn-success" />
     <input th:if="${edit == false}" type="button" value="Reset" class="btn btn-danger" onClick="ResetNew()" />
 		<br>
         <br>

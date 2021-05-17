@@ -33,6 +33,7 @@ h4, h1, h5{
 	padding: 10px;
 	margin-bottom: 5px;
 	position: relative;
+	text-align: left;
 }
 
 body {
@@ -40,8 +41,13 @@ body {
 	margin: auto;
 }
 
-textarea#sdescription {
+textarea {
 	width: 100%;
+	margin-top: 15px;
+}
+
+textarea#sdescription {
+	margin: 0;
 }
 
 .rm-btn {
