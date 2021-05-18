@@ -40,7 +40,7 @@ public class HhKyselyApplication {
 			q3.getChoices().add("Musta");
 			q3.getChoices().add("Pinkki");
 			CheckboxQuestion q4 = new CheckboxQuestion("Erikoisruokavaliotarpeet?", esimerkkiKysely);
-			q4.getChoices().add("Gluteenitot");
+			q4.getChoices().add("Gluteeniton");
 			q4.getChoices().add("Maidoton");
 			q4.getChoices().add("Latkoositon");
 			q4.getChoices().add("Kasvis");
