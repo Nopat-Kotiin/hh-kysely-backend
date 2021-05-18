@@ -5,8 +5,8 @@ import java.util.List;
 public class AnswerStatisticsText extends AnswerStatistics {
     private List<String> answers;
 
-    public AnswerStatisticsText(Long id, String question, List<String> answers) {
-        super(id, question);
+    public AnswerStatisticsText(Long id, String question, List<String> answers, String type) {
+        super(id, question, type);
         this.answers = answers;
     }
 

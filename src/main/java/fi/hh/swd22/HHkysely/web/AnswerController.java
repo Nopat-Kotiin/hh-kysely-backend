@@ -22,7 +22,9 @@ import fi.hh.swd22.HHkysely.domain.AnswerRepository;
 import fi.hh.swd22.HHkysely.domain.AnswerStatistics;
 import fi.hh.swd22.HHkysely.domain.AnswerStatisticsChoice;
 import fi.hh.swd22.HHkysely.domain.AnswerStatisticsText;
+import fi.hh.swd22.HHkysely.domain.CheckboxQuestion;
 import fi.hh.swd22.HHkysely.domain.Question;
+import fi.hh.swd22.HHkysely.domain.RadioQuestion;
 import fi.hh.swd22.HHkysely.domain.Survey;
 import fi.hh.swd22.HHkysely.domain.SurveyRepository;
 
@@ -86,18 +88,25 @@ public class AnswerController {
         Survey survey = s.get();
         for (Question q : survey.getQuestions()) {
             Long qId = q.getId();
-            if (q.getType().equals("text")) {
-                statList.add(new AnswerStatisticsText(qId, q.getQuestion(), q.getAnswers().stream().map(answer -> answer.getAnswer()).collect(Collectors.toList())));
+            String type = q.getType();
+            if (type.equals("text")) {
+                statList.add(new AnswerStatisticsText(qId, q.getQuestion(), q.getAnswers().stream().map(answer -> answer.getAnswer()).collect(Collectors.toList()), type));
             } else {
-                Map<Integer, Integer> answers = new HashMap<>();
+                List<String> choices;
+                Map<String, Integer> answers = new HashMap<>();
+                if (type.equals("radio")) {
+                    choices = ((RadioQuestion) q).getChoices();
+                } else {
+                    choices = ((CheckboxQuestion) q).getChoices();
+                }
+                choices.forEach(choice -> answers.put(choice, 0));
                 for (Answer a : q.getAnswers()) {
                     for (int selection : a.getSelections()) {
-                        if (answers.putIfAbsent(selection, 1) != null) {
-                            answers.put(selection, answers.get(selection) + 1);
-                        }
+                        String choice = choices.get(selection);
+                        answers.put(choice, answers.get(choice) + 1);
                     }
                 }
-                AnswerStatisticsChoice asc = new AnswerStatisticsChoice(qId, q.getQuestion());
+                AnswerStatisticsChoice asc = new AnswerStatisticsChoice(qId, q.getQuestion(), type);
                 asc.setSelections(answers);
                 statList.add(asc);
             }

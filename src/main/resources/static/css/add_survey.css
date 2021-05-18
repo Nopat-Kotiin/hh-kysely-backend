@@ -52,7 +52,7 @@ textarea#sdescription {
 .btn {
 	border: none;
   	margin: 4px 2px;
-	box-shadow:inset 0px -3px 7px 0px #444b4f;
+	box-shadow:inset 0px -3px 7px 0px #010317;
 	background:linear-gradient(to bottom, #327da8 5%, #1f3d57 100%);
 	background-color:#327da8;
 	border-radius:3px;
@@ -74,7 +74,7 @@ textarea#sdescription {
 }
 
 .btn.btn-danger {
-	box-shadow:inset 0px -3px 7px 0px #444b4f;
+	box-shadow:inset 0px -3px 7px 0px #170102;
 	background:linear-gradient(to bottom, #a63131 5%, #571f1f 100%);
 	background-color:#a63131;
 	border-radius:3px;
