@@ -133,7 +133,7 @@ function validateForm() {
     const questions = document.getElementById('questions').getElementsByClassName('question-div');
     if (questions.length === 0) msg += "\n- Survey must have at least 1 question";
     for (var i = 0, row; row = questions[i]; i++) {
-        const area = row.getElementsByTagName('textarea');
+        const area = row.getElementsByTagName('textarea')[0];
         if (area.value === "") {
             emptyRows++;
         }
